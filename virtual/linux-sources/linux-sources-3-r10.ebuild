@@ -22,6 +22,6 @@ RDEPEND="
 		sys-kernel/gentoo-kernel
 		sys-kernel/gentoo-kernel-bin
 		sys-kernel/vanilla-kernel
-		sys-kernel/linux-tkg-sources
-		sys-kernel/xanmod-tt
+		sys-kernel/tkg-sources
+		sys-kernel/xanmod-tt-sources
 	)"
