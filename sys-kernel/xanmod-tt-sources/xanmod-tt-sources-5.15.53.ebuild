@@ -17,7 +17,7 @@ LICENSE+=" CDDL"
 KEYWORDS="~amd64"
 
 IUSE="cjktty"
-SLOT="5.15"
+SLOT="${KV_MAJOR}.${KV_MINOR}"
 XANMOD_VERSION="1"
 XANMOD_URI="https://github.com/xanmod/linux/releases/download/"
 OKV="${OKV}-xanmod"
