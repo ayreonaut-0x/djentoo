@@ -47,7 +47,6 @@ SRC_URI="${GENPATCHES_URI} ${KERNEL_URI} ${ARCH_URI}
 		cfs? ( ${TKG_PATCH_URI}/0003-glitched-cfs-additions.patch -> 0003-glitched-cfs-additions-${PV}.patch )
 		pds? ( ${TKG_PATCH_URI}/0005-glitched-pds.patch -> 0005-glitched-pds-${PV}.patch )
 		tt? ( https://github.com/ptr1337/kernel-patches/raw/master/5.18/sched/0001-tt-${SHPV}.patch )
-		tt? ( https://github.com/ptr1337/kernel-patches/raw/master/5.18/sched/0001-tt-cachy-${SHPV}.patch )
 "
 
 pkg_setup() {
@@ -83,7 +82,6 @@ src_prepare() {
 		version_string="-tkg-pds"
 	elif use tt; then
 		eapply "${DISTDIR}/0001-tt-${SHPV}.patch"
-		eapply "${DISTDIR}/0001-tt-cachy-${SHPV}.patch"
 		version_string="-tkg-tt"
 	else
 		eapply "${DISTDIR}/0003-glitched-base-${PV}.patch"
