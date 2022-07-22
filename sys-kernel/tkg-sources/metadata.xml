@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+
+<pkgmetadata>
+  <maintainer type="person">
+    <email>black.oracle@gmail.com</email>
+    <name>Ayreonaut</name>
+  </maintainer>
+  <use>
+    <flag name="bcachefs">Enable bcachefs patch (EXPERIMENTAL!).</flag>
+    <flag name="bmq">Swap the default for BMQ-based CPU scheduler.</flag>
+    <flag name="cfs">Use the default CPU scheduler.</flag>
+    <flag name="pds">Swap the default for Priority and Deadline CPU scheduler.</flag>
+  </use>
+</pkgmetadata>
