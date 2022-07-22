@@ -20,11 +20,11 @@ COMMUNITY_SHPY="${KV_MAJOR}${KV_MINOR}"
 
 KEYWORDS="~amd64"
 
-IUSE="bmq pds bcachefs cfs"
+IUSE="bmq pds tt bcachefs cfs"
 DESCRIPTION="The Linux Kernel with a selection of patches aiming for better desktop/gaming experience and Gentoo's genpatches"
 HOMEPAGE="https://github.com/Frogging-Family/linux-tkg"
 SLOT="${SHPV}"
-REQUIRED_USE="^^ ( bmq pds cfs )"
+REQUIRED_USE="^^ ( bmq pds tt cfs )"
 
 TKG_PATCH_URI="${HOMEPAGE}/raw/master/linux-tkg-patches/${SHPV}"
 
@@ -47,6 +47,8 @@ SRC_URI="${GENPATCHES_URI} ${KERNEL_URI} ${ARCH_URI}
 		cfs? ( ${TKG_PATCH_URI}/0003-glitched-cfs.patch -> 0003-glitched-cfs-${PV}.patch )
 		cfs? ( ${TKG_PATCH_URI}/0003-glitched-cfs-additions.patch -> 0003-glitched-cfs-additions-${PV}.patch )
 		pds? ( ${TKG_PATCH_URI}/0005-glitched-pds.patch -> 0005-glitched-pds-${PV}.patch )
+		tt? ( https://github.com/ptr1337/kernel-patches/raw/master/5.18/sched/0001-tt-${SHPV}.patch )
+		tt? ( https://github.com/ptr1337/kernel-patches/raw/master/5.18/sched/0001-tt-cachy-${SHPV}.patch )
 "
 
 pkg_setup() {
@@ -72,20 +74,26 @@ src_prepare() {
 		eapply "${DISTDIR}/0008-${SHPV}-bcachefs-${PV}.patch"
 	fi
 
+	local version_string=
 	if use bmq; then
 		eapply "${DISTDIR}/0009-prjc_v${SHPV}-r${PRJC_R}-${PV}.patch"
 		eapply "${DISTDIR}/0009-glitched-ondemand-bmq-${PV}.patch"
 		eapply "${DISTDIR}/0009-glitched-bmq-${PV}.patch"
-		echo "-tkg-bmq" > ${S}/localversion
+		version_string="-tkg-bmq"
 	elif use pds; then
 		eapply "${DISTDIR}/0005-glitched-pds-${PV}.patch"
-		echo "-tkg-pds" > ${S}/localversion
+		version_string="-tkg-pds"
+	elif use tt; then
+		eapply "${DISTDIR}/0001-tt-${SHPV}.patch"
+		eapply "${DISTDIR}/0001-tt-cachy-${SHPV}.patch"
+		version_string="-tkg-tt"
 	else
 		eapply "${DISTDIR}/0003-glitched-base-${PV}.patch"
 		eapply "${DISTDIR}/0003-glitched-cfs-${PV}.patch"
 		eapply "${DISTDIR}/0003-glitched-cfs-additions-${PV}.patch"
-		echo "-tkg" > ${S}/localversion
+		version_string="-tkg"
 	fi
+	echo "${version_string}" > ${S}/localversion
 }
 
 src_install() {
