@@ -36,7 +36,6 @@ SRC_URI="${GENPATCHES_URI} ${KERNEL_URI} ${ARCH_URI}
 		${TKG_PATCH_URI}/0002-clear-patches.patch -> 0002-clear-patches-${PV}.patch
 		${TKG_PATCH_URI}/0002-mm-Support-soft-dirty-flag-read-with-reset.patch -> 0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch
 		${TKG_PATCH_URI}/0006-add-acs-overrides_iommu.patch -> 0006-add-acs-overrides_iommu-${PV}.patch
-		${TKG_PATCH_URI}/0007-v${SHPV}-fsync.patch -> 0007-v${SHPV}-fsync-${PV}.patch
 		${TKG_PATCH_URI}/0007-v${SHPV}-fsync1_via_futex_waitv.patch -> 0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch
 		${TKG_PATCH_URI}/0007-v${SHPV}-winesync.patch -> 0007-v${SHPV}-winesync-${PV}.patch
 		bcachefs? ( ${TKG_PATCH_URI}/0008-${SHPV}-bcachefs.patch -> 0008-${SHPV}-bcachefs-${PV}.patch )
@@ -65,7 +64,6 @@ src_prepare() {
 	eapply "${DISTDIR}/0002-clear-patches-${PV}.patch"
 	eapply "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
 	eapply "${DISTDIR}/0006-add-acs-overrides_iommu-${PV}.patch"
-	eapply "${DISTDIR}/0007-v${SHPV}-fsync-${PV}.patch"
 	eapply "${DISTDIR}/0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch"
 	eapply "${DISTDIR}/0007-v${SHPV}-winesync-${PV}.patch"
 	eapply "${DISTDIR}/0001-bbr2-${SHPV}-introduce-BBRv2.patch"
