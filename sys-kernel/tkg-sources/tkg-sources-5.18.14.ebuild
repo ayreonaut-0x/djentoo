@@ -64,8 +64,6 @@ pkg_setup() {
 		ewarn "Experimental USE flags enabled."
 		ewarn "No support is provided for experimental USE flags."
 	fi
-
-
 }
 
 src_prepare() {
@@ -74,35 +72,52 @@ src_prepare() {
 
 	local version_string="-tkg"
 
-	eapply "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
-	eapply "${DISTDIR}/0001-bbr2-${SHPV}-introduce-BBRv2.patch"
 	eapply "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
+	eapply "${DISTDIR}/0001-bbr2-${SHPV}-introduce-BBRv2.patch"
+	eapply "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
+	eapply "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
+
+	if use tt; then
+		eapply "${DISTDIR}/0001-tt-${SHPV}.patch"
+		version_string+="-tt"
+	fi
+
+	eapply "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
 	eapply "${DISTDIR}/0002-clear-patches-${PV}.patch"
 	eapply "${DISTDIR}/0003-glitched-base-${PV}.patch"
-	eapply "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
-	eapply "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
+
+	if use cfs; then
+		eapply "${DISTDIR}/0003-glitched-cfs-${PV}.patch"
+		eapply "${DISTDIR}/0003-glitched-cfs-additions-${PV}.patch"
+	fi
+
+	if use pds; then
+		eapply "${DISTDIR}/0005-glitched-pds-${PV}.patch"
+		version_string+="-pds"
+	fi
+
 	eapply "${DISTDIR}/0006-add-acs-overrides_iommu-${PV}.patch"
+
+	if use lrng; then
+		eapply "${DISTDIR}/0006-${SHPV}-lrng.patch"
+	fi
+
 	eapply "${DISTDIR}/0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch"
 	eapply "${DISTDIR}/0007-v${SHPV}-winesync-${PV}.patch"
 
-	use lrng && eapply "${DISTDIR}/0006-${SHPV}-lrng.patch"
-	use bcachefs && eapply "${DISTDIR}/0008-${SHPV}-bcachefs-${PV}.patch"
+	if use bcachefs; then
+		eapply "${DISTDIR}/0008-${SHPV}-bcachefs-${PV}.patch"
+	fi
 
 	if use bmq; then
 		eapply "${DISTDIR}/0009-prjc_v${SHPV}-r${PRJC_R}-${PV}.patch"
 		eapply "${DISTDIR}/0009-glitched-ondemand-bmq-${PV}.patch"
 		eapply "${DISTDIR}/0009-glitched-bmq-${PV}.patch"
 		version_string+="-bmq"
-	elif use pds; then
-		eapply "${DISTDIR}/0005-glitched-pds-${PV}.patch"
-		version_string+="-pds"
-	elif use tt; then
-		eapply "${DISTDIR}/0001-tt-${SHPV}.patch"
-		version_string+="-tt"
-	else
-		# eapply "${DISTDIR}/0003-glitched-base-${PV}.patch"
-		eapply "${DISTDIR}/0003-glitched-cfs-${PV}.patch"
-		eapply "${DISTDIR}/0003-glitched-cfs-additions-${PV}.patch"
+	fi
+
+	if use mglru; then
+		eapply "${DISTDIR}/0010-lru_${SHPV}.patch"
 	fi
 
 	echo "${version_string}" > ${S}/localversion
