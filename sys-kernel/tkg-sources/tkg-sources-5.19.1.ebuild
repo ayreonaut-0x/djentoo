@@ -73,13 +73,13 @@ src_prepare() {
 
 	local version_string="-tkg"
 
-	eapply "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
+	eapply -s "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
+	eapply -s "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
 	eapply -s "${DISTDIR}/0002-clear-patches-${PV}.patch"
 	eapply -s "${DISTDIR}/0003-glitched-base-${PV}.patch"
 
 	eapply -s "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
 	eapply -s "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
-	eapply -s "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
 
 	if use tt; then
 		eapply -s "${DISTDIR}/0001-tt-${SHPV}.patch"
@@ -104,20 +104,21 @@ src_prepare() {
 	fi
 
 	eapply -s "${DISTDIR}/0006-add-acs-overrides_iommu-${PV}.patch"
-	eapply -s "${DISTDIR}/0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch"
-	eapply -s "${DISTDIR}/0007-v${SHPV}-winesync-${PV}.patch"
 
 	if use bcachefs; then
 		eapply -s "${DISTDIR}/0008-${SHPV}-bcachefs-${PV}.patch"
 	fi
 
-	if use lrng; then
-		eapply -s "${DISTDIR}/0012-${SHPV}-lrng.patch"
-	fi
-	
 	if use mglru; then
 		eapply -s "${DISTDIR}/0010-lru_${SHPV}.patch"
 	fi
+
+	if use lrng; then
+		eapply -s "${DISTDIR}/0012-${SHPV}-lrng.patch"
+	fi
+
+	eapply -s "${DISTDIR}/0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch"
+	eapply -s "${DISTDIR}/0007-v${SHPV}-winesync-${PV}.patch"
 
 	echo "${version_string}" > ${S}/localversion
 }
