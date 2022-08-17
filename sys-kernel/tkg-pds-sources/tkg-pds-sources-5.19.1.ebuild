@@ -61,38 +61,13 @@ src_prepare() {
 	# kernel-2_src_prepare doesn't apply PATCHES().
 	kernel-2_src_prepare
 
-	local version_string="-tkg"
-
 	eapply -s "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
 	eapply -s "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
-	eapply -s "${DISTDIR}/0002-clear-patches-${PV}.patch"
-	eapply -s "${DISTDIR}/0003-glitched-base-${PV}.patch"
-
 	eapply -s "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
 	eapply -s "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
-
-#	if use tt; then
-#		eapply -s "${DISTDIR}/0001-tt-${SHPV}.patch"
-#		version_string+="-tt"
-#	fi
-
-#	if use cfs; then
-#		eapply -s "${DISTDIR}/0003-glitched-cfs-${PV}.patch"
-#		eapply -s "${DISTDIR}/0003-glitched-cfs-additions-${PV}.patch"
-#	fi
-
-	if use pds; then
-		eapply -s "${DISTDIR}/0005-glitched-pds-${PV}.patch"
-		version_string+="-pds"
-	fi
-
-#	if use bmq; then
-#		eapply -s "${DISTDIR}/0009-prjc_v${SHPV}-r${PRJC_R}-${PV}.patch"
-#		eapply -s "${DISTDIR}/0009-glitched-ondemand-bmq-${PV}.patch"
-#		eapply -s "${DISTDIR}/0009-glitched-bmq-${PV}.patch"
-#		version_string+="-bmq"
-#	fi
-
+	eapply -s "${DISTDIR}/0002-clear-patches-${PV}.patch"
+	eapply -s "${DISTDIR}/0003-glitched-base-${PV}.patch"
+	eapply -s "${DISTDIR}/0005-glitched-pds-${PV}.patch"
 	eapply -s "${DISTDIR}/0006-add-acs-overrides_iommu-${PV}.patch"
 	eapply -s "${DISTDIR}/0007-v${SHPV}-fsync1_via_futex_waitv-${PV}.patch"
 	eapply -s "${DISTDIR}/0007-v${SHPV}-winesync-${PV}.patch"
