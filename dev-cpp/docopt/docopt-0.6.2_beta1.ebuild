@@ -8,9 +8,8 @@ EGIT_BRANCH="master"
 
 if ! [[ ${PV} == *9999 ]]; then
     EGIT_COMMIT="400e6dd8e59196c914dcc2c56caf7dae7efa5eb3"
+    KEYWORDS="~amd64"
 fi
-
-KEYWORDS="~amd64"
 
 IUSE="boost examples"
 DESCRIPTION="C++ port of the Python command-line argument parser."
