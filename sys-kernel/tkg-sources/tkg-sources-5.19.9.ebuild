@@ -4,7 +4,7 @@
 EAPI=8
 ETYPE="sources"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="7"
+K_GENPATCHES_VER="11"
 K_SECURITY_UNSUPPORTED="1"
 K_NOSETEXTRAVERSION="1"
 PRJC_R=0
@@ -48,12 +48,12 @@ src_prepare() {
 	# kernel-2_src_prepare doesn't apply PATCHES().
 	kernel-2_src_prepare
 
-	eapply "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
 	eapply "${DISTDIR}/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-${PV}.patch"
-	eapply "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
-	eapply "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
+	eapply "${DISTDIR}/more-uarches-for-kernel-${SHPV}%2B-${PV}.patch"
 	eapply "${DISTDIR}/0002-clear-patches-${PV}.patch"
 	eapply "${DISTDIR}/0003-glitched-base-${PV}.patch"
+	eapply "${DISTDIR}/0001-mm-Support-soft-dirty-flag-reset-for-VA-range-${PV}.patch"
+	eapply "${DISTDIR}/0002-mm-Support-soft-dirty-flag-read-with-reset-${PV}.patch"
 	eapply "${DISTDIR}/0003-glitched-cfs-${PV}.patch"
 	eapply "${DISTDIR}/0003-glitched-cfs-additions-${PV}.patch"
 	eapply "${DISTDIR}/0006-add-acs-overrides_iommu-${PV}.patch"
