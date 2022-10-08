@@ -24,5 +24,5 @@ RDEPEND="
 		sys-kernel/vanilla-kernel
 		sys-kernel/tkg-sources
 		sys-kernel/xanmod-tt-sources
-		sys-kernel/bore-sources
+		sys-kernel/cachyos-sources
 	)"
