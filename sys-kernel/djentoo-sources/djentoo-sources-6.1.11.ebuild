@@ -3,33 +3,31 @@
 
 EAPI="8"
 ETYPE="sources"
-EXTRAVERSION="-djentoo"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="13"
 
 inherit kernel-2
 detect_version
-detect_arch
 
 GENPATCHES_HOMEPAGE="https://dev.gentoo.org/~mpagano/genpatches"
 CACHYOS_HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
-LICENSE="GPL"
 KEYWORDS="~amd64"
+LICENSE="GPL"
+DESCRIPTION="Linux ${SLOT} sources with Gentoo and CachyOS patches."
 HOMEPAGE="${GENPATCHES_HOMEPAGE} ${CACHYOS_HOMEPAGE}"
-
-IUSE="+clang-pgo +experimental"
-REQUIRED_USE="clang-pgo? ( experimental )"
+SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 MY_KV="${KV_MAJOR}.${KV_MINOR}"
 SLOT="${MY_KV}"
+
+IUSE="+clang-pgo +experimental"
+REQUIRED_USE="clang-pgo? ( experimental )"
 
 DEPEND="virtual/linux-sources"
 RDEPEND="${DEPEND}"
 BDEPEND="clang-pgo? ( >=sys-devel/clang-14 )" 
 
-DESCRIPTION="Linux ${SLOT} sources with Gentoo and CachyOS patches."
-SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 src_unpack() {
 	kernel-2_src_unpack
@@ -61,6 +59,12 @@ pkg_postinst() {
 	einfo "${GENPATCHES_HOMEPAGE}"
 	einfo "For more info on the CachyOS patchset, and to report problems, see:"
 	einfo "${CACHYOS_HOMEPAGE}"
+
+	if use clang-pgo; then
+		ewarn "clang-pgo USE flag is enabled."
+		ewarn "This is untested and may result in an unbootable system. Keep a working kernel!"
+		einfo "For build instructions refer to Documentation/dev-tools/pgo.rst"
+	fi
 }
 
 pkg_postrm() {
