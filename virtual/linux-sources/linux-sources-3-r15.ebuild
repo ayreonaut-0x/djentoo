@@ -26,4 +26,5 @@ RDEPEND="
 		sys-kernel/xanmod-tt-sources
 		sys-kernel/cachyos-sources
 		sys-kernel/gencachy-sources
+		sys-kernel/djentoo-sources
 	)"
