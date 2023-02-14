@@ -3,6 +3,7 @@
 
 EAPI="8"
 ETYPE="sources"
+EXTRAVERSION="-djentoo"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="13"
 
@@ -20,7 +21,8 @@ HOMEPAGE="${GENPATCHES_HOMEPAGE} ${CACHYOS_HOMEPAGE}"
 IUSE="+clang-pgo +experimental"
 REQUIRED_USE="clang-pgo? ( experimental )"
 
-SLOT="${KV_MAJOR}.${KV_MINOR}"
+MY_KV="${KV_MAJOR}.${KV_MINOR}"
+SLOT="${MY_KV}"
 
 DEPEND="virtual/linux-sources"
 RDEPEND="${DEPEND}"
@@ -45,11 +47,11 @@ src_unpack() {
 	)
 
 	for p in ${patches[*]}; do
-		eapply "${FILESDIR}/${SLOT}/${p}"
+		eapply "${FILESDIR}/${MY_KV}/${p}"
 	done
 
 	if use clang-pgo; then
-		eapply "${FILESDIR}/${SLOT}/0001-Clang-PGO.patch"
+		eapply "${FILESDIR}/${MY_KV}/0001-Clang-PGO.patch"
 	fi
 }
 
