@@ -8,9 +8,9 @@ KEYWORDS="~amd64"
 IUSE=""
 SLOT=0
 
-RDEPEND=""
 DEPEND=""
-BDEPEND="dev-util/make"
+RDEPEND="${DEPEND}"
+BDEPEND="sys-devel/make"
 
 src_prepare() {
    default
