@@ -4,9 +4,8 @@
 EAPI=8
 EXTRAVERSION="-cachyos"
 K_SECURITY_UNSUPPORTED="1"
-UNIPATCH_STRICTORDER="yes"
 ETYPE="sources"
-CACHYOS_COMMIT="229660f0c4cf6efa861c5a58718376453492c9c2"
+CACHYOS_COMMIT="3910b8fc71751f7ab472a291cb25306d44c2ff5a"
 inherit kernel-2
 detect_version
 
@@ -15,9 +14,13 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI}
 	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
-	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
-	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
-	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch
+	eevdf? (
+		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
+		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
+	)
+	high-hz? (
+		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch
+	)
 "
 
 LICENSE="GPL"
