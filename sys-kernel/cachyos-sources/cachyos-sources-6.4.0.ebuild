@@ -5,29 +5,30 @@ EAPI=8
 EXTRAVERSION="-cachyos"
 K_SECURITY_UNSUPPORTED="1"
 ETYPE="sources"
-CACHYOS_COMMIT="3910b8fc71751f7ab472a291cb25306d44c2ff5a"
+CACHYOS_COMMIT="ddbc8277bb31d75737276a67218e383e941ecc4f"
 inherit kernel-2
 detect_version
 
 DESCRIPTION="CachyOS are improved kernels that improve performance and other aspects."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
-	${KERNEL_URI}
-	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
-	eevdf? (
-		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
-		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
-	)
-	high-hz? (
-		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch
-	)
+${KERNEL_URI}
+https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
+bore? (
+   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-cachy.patch -> ${PV}-0001-bore-cachy.patch
+   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-bore-tuning-sysctl.patch -> ${PV}-0001-bore-tuning-sysctl.patch
+)
+eevdf? (
+   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
+   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
+)
 "
 
 LICENSE="GPL"
 SLOT="stable"
 KEYWORDS="amd64"
-IUSE="+eevdf bore high-hz prjc tt"
-REQUIRED_USE="|| ( bore eevdf prjc tt ) tt? ( high-hz )"
+IUSE="+eevdf bore prjc tt"
+REQUIRED_USE="|| ( bore eevdf prjc tt )"
 
 DEPEND="virtual/linux-sources"
 RDEPEND="${DEPEND}"
@@ -37,8 +38,8 @@ src_prepare() {
 	eapply "${DISTDIR}/${PV}-0001-cachyos-base-all.patch"
 
 	if use bore; then
-		eapply "${FILESDIR}/${KV_MAJOR}.${KV_MINOR}/${KV_MAJOR}.${KV_MINOR}-bore-cachy.patch"
-		eapply "${FILESDIR}/${KV_MAJOR}.${KV_MINOR}/${KV_MAJOR}.${KV_MINOR}-bore-tuning-sysctl.patch"
+		eapply "${DISTDIR}/${PV}-0001-bore-cachy.patch"
+		eapply "${DISTDIR}/${PV}-0001-bore-tuning-sysctl.patch"
 	fi
 
 	if use eevdf; then
@@ -46,9 +47,9 @@ src_prepare() {
       eapply "${DISTDIR}/${PV}-0001-bore-eevdf.patch"
 	fi
 
-	if use high-hz; then
-		eapply "${DISTDIR}/${PV}-0001-high-hz.patch"
-	fi
+	#if use high-hz; then
+	#	eapply "${DISTDIR}/${PV}-0001-high-hz.patch"
+	#fi
 
 	if use tt; then
 		eapply "${FILESDIR}/${KV_MAJOR}.${KV_MINOR}/${KV_MAJOR}.${KV_MINOR}-tt-cachy.patch"
@@ -64,10 +65,6 @@ src_prepare() {
 	if use bore; then
 		cp "${FILESDIR}/config-x86_64-bore" .config && elog "BORE config applied" || die
 	fi
-
-	#if use cacule; then
-	#	cp "${FILESDIR}/config-x86_64-cacule" .config && elog "CaCULE config applied" || die
-	#fi
 
 	if use eevdf; then
 		cp "${FILESDIR}/config-x86_64-eevdf" .config && elog "EEVDF config applied" || die
