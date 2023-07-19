@@ -1,0 +1,12 @@
+diff --git a/pal/src/core/imported/rdf/rdf/inc/amdrdf.h b/pal/src/core/imported/rdf/rdf/inc/amdrdf.h
+index 2ac8b1ce..cbee874d 100644
+--- a/pal/src/core/imported/rdf/rdf/inc/amdrdf.h
++++ b/pal/src/core/imported/rdf/rdf/inc/amdrdf.h
+@@ -25,6 +25,7 @@
+ #pragma once
+ 
+ #include <cstddef>
++#include <cstdint>
+ #include <cstring>
+ #include <functional>
+ #include <memory>
