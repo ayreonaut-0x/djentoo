@@ -12,7 +12,7 @@ DESCRIPTION="AMD Open Source Driver for Vulkan"
 HOMEPAGE="https://github.com/GPUOpen-Drivers/AMDVLK"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS=""
 IUSE="wayland +raytracing"
 REQUIRED_USE="|| ( abi_x86_32 abi_x86_64 )"
 
@@ -48,16 +48,16 @@ FETCH_URI="https://github.com/GPUOpen-Drivers"
 ## and place commits in the desired variables
 ## EXAMPLE: XGL_COMMIT="80e5a4b11ad2058097e77746772ddc9ab2118e07"
 ## SRC_URI="... ${FETCH_URI}/$PART/archive/$COMMIT.zip -> $PART-$COMMIT.zip ..."
-XGL_COMMIT="6288905587fafc221b60045bceba73cf26e433ad"
-PAL_COMMIT="f01505f7fe4b38b573a41cb4d9d66d00e0c256f0"
-LLPC_COMMIT="f44e737f5e13eca803f465fc86532c24608c4daf"
-GPURT_COMMIT="a1103572dfcc29c7baee04e2ececedca8fda86d7"
-LLVM_PROJECT_COMMIT="02394516f587d6bdb606b068fe604284f5c6a007"
+XGL_COMMIT="02e867e81626b9566c5cc24f134ec0760e93a94a"
+PAL_COMMIT="3efba26966a3fd566fb8c4b92afa9accece85607"
+LLPC_COMMIT="298e95edad06019e0266c492996f086e78896009"
+GPURT_COMMIT="a1220a7d201de046540ee46139fa05ba788eddd8"
+LLVM_PROJECT_COMMIT="9b82edca7fa326894f42ba6a0e1b22569dcd5517"
 METROHASH_COMMIT="18893fb28601bb9af1154cd1a671a121fff6d8d3"
 CWPACK_COMMIT="4f8cf0584442a91d829d269158567d7ed926f026"
 # Submodule of LLPC, also updates often. Grab commit version from
 # https://github.com/GPUOpen-Drivers/llpc/tree/${LLPC_COMMIT}/imported
-LLVM_DIALECTS_COMMIT="e7464fe6373553fa1b1c1398417d7bb76d7931ef"
+LLVM_DIALECTS_COMMIT="b716b5679d2d7c24e2d10ffac339a6672ebf25bf"
 ### end of variables
 SRC_URI="${FETCH_URI}/xgl/archive/${XGL_COMMIT}.tar.gz -> amdvlk-xgl-${XGL_COMMIT}.tar.gz
 ${FETCH_URI}/pal/archive/${PAL_COMMIT}.tar.gz -> amdvlk-pal-${PAL_COMMIT}.tar.gz
@@ -72,8 +72,10 @@ PATCHES=(
 	"${FILESDIR}/amdvlk-2022.3.5-no-compiler-presets.patch" #875821
 	"${FILESDIR}/amdvlk-2022.4.1-proper-libdir.patch"
 	"${FILESDIR}/amdvlk-2022.4.2-license-path.patch" #878803
+	#"${FILESDIR}/amdvlk-2022.4.2-reduced-llvm-installations.patch"
+	#"${FILESDIR}/amdvlk-2022.4.2-reduced-llvm-installations-part2.patch"
 	"${FILESDIR}/amdvlk-2022.4.4-r1-disable-Werror.patch" #887777
-	#"${FILESDIR}/amdvlk-2023.2.2-fix-missing-includes.patch"
+	"${FILESDIR}/amdvlk-2023.2.2-fix-missing-includes.patch"
 )
 
 pkg_pretend(){
