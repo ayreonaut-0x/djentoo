@@ -8,29 +8,25 @@ K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="8"
-CACHYOS_COMMIT="a85bf36d6d6928f5a4020e0d5f4479ba4e052870"
 
 inherit kernel-2
 detect_version
 
-DESCRIPTION="CachyOS are improved kernels that improve performance and other aspects."
+CACHYOS_COMMIT="a85bf36d6d6928f5a4020e0d5f4479ba4e052870"
+CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
+
+DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchset's, aiming to provide improved performance and responsiveness for desktop workloads."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
-	https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
+	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
 	bore? (
-	   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-cachy.patch -> ${PV}-0001-bore-cachy.patch
-	   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-bore-tuning-sysctl.patch -> ${PV}-0001-bore-tuning-sysctl.patch
+	   ${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> ${PV}-0001-bore-cachy.patch
+	   ${CACHYOS_GIT_URI}/misc/0001-bore-tuning-sysctl.patch -> ${PV}-0001-bore-tuning-sysctl.patch
 	)
-	bore-eevdf? (
-		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
-	)
-	eevdf? (
-	   https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
-	)
-	high-hz? (
-		https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch
-	)
+	bore-eevdf? ( ${CACHYOS_GIT_URI}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch	)
+	eevdf? ( ${CACHYOS_GIT_URI}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch )
+	high-hz? ( ${CACHYOS_GIT_URI}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch )
 "
 
 LICENSE="GPL"
