@@ -20,13 +20,11 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> ${PV}-0001-cachyos-base-all.patch
-	bore? (
-	   ${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> ${PV}-0001-bore-cachy.patch
-	   ${CACHYOS_GIT_URI}/misc/0001-bore-tuning-sysctl.patch -> ${PV}-0001-bore-tuning-sysctl.patch
-	)
-	bore-eevdf? ( ${CACHYOS_GIT_URI}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch	)
-	eevdf? ( ${CACHYOS_GIT_URI}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch )
-	high-hz? ( ${CACHYOS_GIT_URI}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch )
+	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> ${PV}-0001-bore-cachy.patch
+	${CACHYOS_GIT_URI}/misc/0001-bore-tuning-sysctl.patch -> ${PV}-0001-bore-tuning-sysctl.patch
+	${CACHYOS_GIT_URI}/sched/0001-bore-eevdf.patch -> ${PV}-0001-bore-eevdf.patch
+	${CACHYOS_GIT_URI}/sched/0001-EEVDF.patch -> ${PV}-0001-EEVDF.patch
+	${CACHYOS_GIT_URI}/misc/0001-high-hz.patch -> ${PV}-0001-high-hz.patch
 "
 
 LICENSE="GPL"
