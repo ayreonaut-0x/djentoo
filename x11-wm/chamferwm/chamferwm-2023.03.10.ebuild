@@ -14,7 +14,7 @@ EGIT_COMMIT="93b8f79e91b63b8ac61df64541167c9dd9bb6fb7"
 
 EMESON_BUILDTYPE="release"
 
-inherit git-r3 meson python-r1 python-any-r1 python-utils-r1
+inherit git-r3 meson python-any-r1 python-utils-r1
 
 LICENSE="BSD"
 SLOT="0"
