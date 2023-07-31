@@ -21,7 +21,7 @@ LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA BSD public-domain rc"
 SLOT="${LLVM_MAJOR}/${LLVM_SOABI}"
 KEYWORDS="amd64 ~arm arm64 ~loong ~ppc ppc64 ~riscv ~sparc x86 ~amd64-linux ~ppc-macos ~x64-macos"
 IUSE="
-	+binutils-plugin debug doc exegesis libedit +libffi polly ncurses test xar
+	+binutils-plugin debug doc exegesis libedit +libffi lto polly ncurses test xar
 	xml z3 zstd
 "
 RESTRICT="!test? ( test )"
@@ -47,12 +47,12 @@ BDEPEND="
 	>=dev-util/cmake-3.16
 	sys-devel/gnuconfig
 	kernel_Darwin? (
-		<sys-libs/libcxx-${LLVM_VERSION}.9999
-		>=sys-devel/binutils-apple-5.1
+	    <sys-libs/libcxx-${LLVM_VERSION}.9999
+	    >=sys-devel/binutils-apple-5.1
 	)
 	doc? ( $(python_gen_any_dep '
-		dev-python/recommonmark[${PYTHON_USEDEP}]
-		dev-python/sphinx[${PYTHON_USEDEP}]
+			dev-python/recommonmark[${PYTHON_USEDEP}]
+			dev-python/sphinx[${PYTHON_USEDEP}]
 	') )
 	libffi? ( virtual/pkgconfig )
 "
@@ -68,55 +68,12 @@ PDEPEND="
 	binutils-plugin? ( >=sys-devel/llvmgold-${LLVM_MAJOR} )
 "
 
-LLVM_COMPONENTS=( llvm cmake )
+LLVM_COMPONENTS=( llvm cmake polly third-party )
 LLVM_TEST_COMPONENTS=( third-party )
 LLVM_MANPAGES=1
 LLVM_PATCHSET=${PV}
 LLVM_USE_TARGETS=provide
 llvm.org_set_globals
-
-POLLY_DEPS=(
-	LLVMCore
-	LLVMScalarOpts
-	LLVMInstCombine
-	LLVMTransformUtils
-	LLVMAnalysis
-	LLVMipo
-	LLVMMC
-	LLVMPasses
-	LLVMLinker
-	LLVMIRReader
-	LLVMBitReader
-	LLVMMCParser
-	LLVMObject
-	LLVMProfileData
-	LLVMTarget
-	LLVMTargetParser
-	LLVMVectorize
-	LLVMBinaryFormat
-	LLVMRemarks
-	LLVMAsmParser
-	LLVMBitstreamReader
-	LLVMAggressiveInstCombine
-	LLVMBitWriter
-	LLVMFrontendOpenMP
-	LLVMInstrumentation
-	LLVMDebugInfoCodeView
-	LLVMTextAPI
-	LLVMSymbolize
-	LLVMDebugInfoDWARF
-	LLVMCodeGen
-	LLVMCoroutines
-	LLVMIRPrinter
-	LLVMObjCARCOpts
-	LLVMDebugInfoPDB
-	LLVMDebugInfoMSF
-	LLVMNVPTXCodeGen
-	LLVMNVPTXDesc
-	LLVMNVPTXInfo
-	LLVMAsmPrinter
-	LLVMSelectionDAG
-)
 
 python_check_deps() {
 	use doc || return 0
@@ -172,6 +129,9 @@ check_distribution_components() {
 					# TableGen lib + deps
 					LLVMDemangle|LLVMSupport|LLVMTableGen)
 						;;
+					Polly|LLVMAggressiveInstCombine|LLVMAnalysis|LLVMAsmParser|LLVMAsmPrinter|LLVMBinaryFormat|LLVMBitReader|LLVMBitstreamReader|LLVMBitWriter|LLVMCodeGen|LLVMCoroutines|LLVMDebugInfoCodeView|LLVMDebugInfoDWARF|LLVMDebugInfoMSF|LLVMDebugInfoPDB|LLVMCore|LLVMExtensions|LLVMFrontendOpenMP|LLVMLinker|LLVMInstCombine|LLVMInstrumentation|LLVMipo|LLVMIRPrinter|LLVMIRReader|LLVMMC|LLVMMCParser|LLVMObjCARCOpts|LLVMObject|LLVMPasses|LLVMProfileData|LLVMRemarks|LLVMScalarOpts|LLVMSelectionDAG|LLVMSymbolize|LLVMTransformUtils|LLVMTarget|LLVMTargetParser|LLVMTextAPI|LLVMVectorize|LLVMNVPTXCodeGen|LLVMNVPTXDesc|LLVMNVPTXInfo)
+						use polly || continue
+						;;
 					# static libs
 					LLVM*)
 						continue
@@ -185,7 +145,8 @@ check_distribution_components() {
 						use doc || continue
 						;;
 					docs-polly-html)
-						use doc && use polly || continue
+						use doc || continue
+						use polly || continue
 						;;
 				esac
 
@@ -218,13 +179,14 @@ check_distribution_components() {
 	fi
 }
 
-pkg_setup() {
-	if use polly; then
-		LLVM_COMPONENTS+=( polly )
-	fi
+# pkg_setup() {
+# 	if use lto && tc-is-gcc; then
+# 		ewarn "LTO and GCC can lead to compilation failure/runtime errors."
+# 		ewarn "It it recommended to disable LTO or compile with Clang."
+# 	fi
 
-	llvm.org_pkg_setup
-}
+# 	llvm.org_pkg_setup
+# }
 
 src_prepare() {
 	# disable use of SDK on OSX, bug #568758
@@ -359,6 +321,53 @@ get_distribution_components() {
 			opt-viewer
 		)
 
+		if use polly; then
+			out+=(
+				Polly
+				LLVMAggressiveInstCombine
+				LLVMAnalysis
+				LLVMAsmParser
+				LLVMAsmPrinter
+				LLVMBinaryFormat
+				LLVMBitReader
+				LLVMBitstreamReader
+				LLVMBitWriter
+				LLVMCodeGen
+				LLVMCoroutines
+				LLVMDebugInfoCodeView
+				LLVMDebugInfoDWARF
+				LLVMDebugInfoMSF
+				LLVMDebugInfoPDB
+				LLVMCore
+				LLVMExtensions
+				LLVMFrontendOpenMP
+				LLVMLinker
+				LLVMInstCombine
+				LLVMInstrumentation
+				LLVMipo
+				LLVMIRPrinter
+				LLVMIRReader
+				LLVMMC
+				LLVMMCParser
+				LLVMNVPTXCodeGen
+				LLVMNVPTXDesc
+				LLVMNVPTXInfo
+				LLVMObjCARCOpts
+				LLVMObject
+				LLVMPasses
+				LLVMProfileData
+				LLVMRemarks
+				LLVMScalarOpts
+				LLVMSelectionDAG
+				LLVMSymbolize
+				LLVMTransformUtils
+				LLVMTarget
+				LLVMTargetParser
+				LLVMTextAPI
+				LLVMVectorize
+			)
+		fi
+
 		if llvm_are_manpages_built; then
 			out+=(
 				# manpages
@@ -366,7 +375,9 @@ get_distribution_components() {
 				docs-llvm-dwarfdump-man
 				docs-llvm-man
 			)
+			use polly && out+=( docs-polly-man )
 		fi
+
 		if use doc; then
 			out+=(
 				docs-llvm-html
@@ -377,28 +388,20 @@ get_distribution_components() {
 		use binutils-plugin && out+=(
 			LLVMgold
 		)
-
-		# if use polly; then
-		# 	out+=(
-		# 		Polly
-		# 		${POLLY_DEPS[@]}
-		# 	)
-		# fi
 	fi
 
 	printf "%s${sep}" "${out[@]}"
 }
 
 multilib_src_configure() {
-	tc-is-gcc && filter-lto # GCC miscompiles LLVM, bug #873670
+	# tc-is-gcc && filter-lto # GCC miscompiles LLVM, bug #873670
+	filter-lto
 
 	local ffi_cflags ffi_ldflags
 	if use libffi; then
 		ffi_cflags=$($(tc-getPKG_CONFIG) --cflags-only-I libffi)
 		ffi_ldflags=$($(tc-getPKG_CONFIG) --libs-only-L libffi)
 	fi
-
-	# use polly && ENABLED_PROJECTS+=( polly )
 
 	local libdir=$(get_libdir)
 	local mycmakeargs=(
@@ -446,19 +449,20 @@ multilib_src_configure() {
 		-DOCAMLFIND=NO
 	)
 
-	# if use lto && tc-is-gcc; then
-	# 	ewarn "USE=lto will be disabled due to caused by GCC."
-	# else
-	# 	mycmakeargs+=(
-	# 		-DLLVM_ENABLE_LTO=ON
-	# 	)
-	# fi
-
 	use polly && mycmakeargs+=(
 		-DLLVM_ENABLE_PROJECTS=polly
+		-DLLVM_TOOL_POLLY_BUILD=ON
 		-DLLVM_POLLY_LINK_INTO_TOOLS=ON
 		-DPOLLY_ENABLE_GPGPU_CODEGEN=ON
 	)
+
+	if use lto; then
+		if tc-is-gcc; then
+			ewarn "USE=lto will be disabled due to compilation failures/runtime errors caused by GCC."
+		else
+			mycmakeargs+=( -DLLVM_ENABLE_LTO="thin"	)
+		fi
+	fi
 
 	local suffix=
 	if [[ -n ${EGIT_VERSION} && ${EGIT_BRANCH} != release/* ]]; then
@@ -569,24 +573,15 @@ src_install() {
 multilib_src_install() {
 	DESTDIR=${D} cmake_build install-distribution
 
+	if use polly; then
+		DESTDIR=${D} cmake_build tools/polly/install/strip
+	fi
+
 	# move headers to /usr/include for wrapping
 	rm -rf "${ED}"/usr/include || die
 	mv "${ED}"/usr/lib/llvm/${LLVM_MAJOR}/include "${ED}"/usr/include || die
 
 	LLVM_LDPATHS+=( "${EPREFIX}/usr/lib/llvm/${LLVM_MAJOR}/$(get_libdir)" )
-
-	# if use polly; then
-	# 	for l in "${POLLY_DEPS[@]}"; do
-	# 		case ${l} in
-	# 		LLVM*)
-	# 			rm -f "${ED}/usr/lib/llvm/${LLVM_MAJOR}/$(get_libdir)/${l}.a" || die
-	# 			;;
-	# 		*)
-	# 			rm -f "${ED}/usr/lib/llvm/${LLVM_MAJOR}/$(get_libdir)/LLVM${l}.a" || die
-	# 			;;
-	# 		esac
-	# 	done
-	# fi
 }
 
 multilib_src_install_all() {
