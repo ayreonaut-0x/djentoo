@@ -1,0 +1,11 @@
+diff --git a/share/chamfer.desktop b/share/chamfer.desktop
+index a672055..43e6bd6 100644
+--- a/share/chamfer.desktop
++++ b/share/chamfer.desktop
+@@ -1,5 +1,5 @@
+ [Desktop Entry]
+ Name=chamfer
+ Comment=A tiling X11 window manager with Vulkan compositor.
+-Exec=chamfer --shader-path=~/.local/share/chamfer/shaders --shader-path=~/.config/chamfer/shaders/ --shader-path=/usr/share/chamfer/shaders/
++Exec=chamfer
+ Type=Application
