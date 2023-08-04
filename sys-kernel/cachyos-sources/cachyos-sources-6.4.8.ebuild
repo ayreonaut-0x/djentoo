@@ -32,9 +32,9 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="${KV_MAJOR}.${KV_MINOR}"
 KEYWORDS="amd64"
-IUSE="bore +bore-eevdf eevdf high-hz prjc tt"
+IUSE="bore +bore-eevdf cfs eevdf high-hz prjc tt"
 REQUIRED_USE="
-	|| ( bore bore-eevdf eevdf prjc tt )
+	|| ( bore bore-eevdf cfs eevdf prjc tt )
 	tt? ( high-hz )
 "
 
@@ -42,23 +42,26 @@ DEPEND="virtual/linux-sources"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+PATCHES=( ${DISTDIR}/${P}-0001-cachyos-base-all.patch )
+
 src_prepare() {
-	eapply "${DISTDIR}/${P}-0001-cachyos-base-all.patch"
+	use bore && PATCHES+=(
+		${DISTDIR}/${P}-0001-bore-cachy.patch
+		${DISTDIR}/${P}-0001-bore-tuning-sysctl.patch
+	)
 
-	use bore && \
-		eapply "${DISTDIR}/${P}-0001-bore-cachy.patch" && \
-		eapply "${DISTDIR}/${P}-0001-bore-tuning-sysctl.patch" \
+	use bore-eevdf && PATCHES+=(
+		${DISTDIR}/${P}-0001-EEVDF.patch
+      	${DISTDIR}/${P}-0001-bore-eevdf.patch
+	)
 
-	use bore-eevdf && \
-		eapply "${DISTDIR}/${P}-0001-EEVDF.patch" && \
-      	eapply "${DISTDIR}/${P}-0001-bore-eevdf.patch" \
-
-	use eevdf && eapply "${DISTDIR}/${P}-0001-EEVDF.patch"
-	use prjc && eapply	"${DISTDIR}/${P}-0001-prjc-cachy.patch"
-	use tt && eapply "${DISTDIR}/${P}-0001-tt-cachy.patch"
-	use high-hz && eapply "${DISTDIR}/${P}-0001-high-hz.patch"
+	use eevdf && PATCHES+=( ${DISTDIR}/${P}-0001-EEVDF.patch )
+	use prjc && PATCHES+=( ${DISTDIR}/${P}-0001-prjc-cachy.patch )
+	use tt && PATCHES+=( ${DISTDIR}/${P}-0001-tt-cachy.patch )
+	use high-hz && PATCHES+=( ${DISTDIR}/${P}-0001-high-hz.patch )
 
 	eapply_user
+	default
 }
 
 pkg_postinst() {
