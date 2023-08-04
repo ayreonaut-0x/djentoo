@@ -2,12 +2,14 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>rosen@aleksandrov.tech</email>
-		<name>Rosen Aleksandrov</name>
+		<email>black.oracle@gmail.com</email>
+		<name>Andrew Hines</name>
 	</maintainer>
 	<use>
-		<flag name="eevdf"> EEVDF CPU Scheduler - an enhanced version of Linux CFS </flag>
 		<flag name="bore"> BORE (Burst-Oriented Response Enhancer) CPU Scheduler by firelzrd (BORE) </flag>
+		<flag name="bore-eevdf"> EEVDF CPU Scheduler with additional BORE tweaks (upstream default) </flag>
+		<flag name="cfs"> Enable this if you're happy with the default Linux CPU scheduler </flag>
+		<flag name="eevdf"> EEVDF CPU Scheduler - an enhanced version of Linux CFS </flag>
 		<flag name="high-hz"> CONFIG_HZ=833/1666 patch - EXPERIMENTAL! </flag>
 		<flag name="prjc"> Project C patch set </flag>
 		<flag name="tt"> Task Type Scheduler by Hamad Marri (TT) </flag>
