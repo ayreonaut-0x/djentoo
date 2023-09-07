@@ -1,0 +1,22 @@
+--- glibc-2.36/malloc/malloc.c~	2022-11-08 20:32:05.000000000 +0000
++++ glibc-2.36/malloc/malloc.c	2022-12-30 18:10:21.105181238 +0000
+@@ -2434,7 +2434,7 @@
+ 
+   char *mm = (char *) MMAP (0, size,
+ 			    mtag_mmap_flags | PROT_READ | PROT_WRITE,
+-			    extra_flags);
++			    extra_flags | MAP_POPULATE);
+   if (mm == MAP_FAILED)
+     return mm;
+ 
+--- glibc-2.36/malloc/malloc.c~	2022-12-30 18:10:21.000000000 +0000
++++ glibc-2.36/malloc/malloc.c	2022-12-30 18:14:26.007645056 +0000
+@@ -2031,7 +2031,7 @@
+       p = q;
+     }
+ 
+-  __madvise (p, size, MADV_HUGEPAGE);
++  __madvise (p, size, MADV_COLLAPSE);
+ #endif
+ }
+ 
