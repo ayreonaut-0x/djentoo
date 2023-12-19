@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="1"
+K_GENPATCHES_VER="9"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="3d380444f70b6d779a542f5aeb7c517df47d235e"
+CACHYOS_COMMIT="6476b28bd558226b8922da8d299176f0882687ff"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -22,7 +22,7 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched/0001-bore.patch -> 0001-bore-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-sched-ext.patch -> 0001-sched-ext-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy-ext.patch -> 0001-bore-cachy-ext-${CACHYOS_COMMIT}.patch
 "
@@ -47,7 +47,7 @@ PATCHES=( ${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch )
 pkg_setup() {
 	use bore && PATCHES+=(
 		${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
-		${DISTDIR}/0001-bore-tuning-sysctl-${CACHYOS_COMMIT}.patch
+		# ${DISTDIR}/0001-bore-tuning-sysctl-${CACHYOS_COMMIT}.patch
 	)
 
 	use sched-ext && PATCHES+=(
