@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="15"
+K_GENPATCHES_VER="23"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="6a19b6eaa68b014a3521d6e033410b436e06af18"
+CACHYOS_COMMIT="f00fa0907d6de3949431ec0eb718e6f1c40299b1"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -20,7 +20,7 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
 "
