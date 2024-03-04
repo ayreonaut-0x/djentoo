@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="23"
+K_GENPATCHES_VER="12"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="f00fa0907d6de3949431ec0eb718e6f1c40299b1"
+CACHYOS_COMMIT="dcc305b239ed92e39a9cdcf5b5ce3fb2345b8329"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -20,9 +20,11 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-amd-hdr.patch -> 0001-amd-hdr-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-mm-Mitigate-a-vmap-lock-contention-v3.patch -> 0001-mm-Mitigate-a-vmap-lock-contention-v3-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 "
 
 LICENSE="GPL"
@@ -41,25 +43,11 @@ BDEPEND=""
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-bcachefs-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-amd-hdr-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-mm-Mitigate-a-vmap-lock-contention-v3-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 )
-
-# pkg_setup() {
-	# use bore && PATCHES+=(
-	# 	${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	# 	# ${DISTDIR}/0001-bore-tuning-sysctl-${CACHYOS_COMMIT}.patch
-	# )
-
-	# use sched-ext && PATCHES+=(
-	# 	${DISTDIR}/0001-sched-ext-${CACHYOS_COMMIT}.patch
-	# 	${DISTDIR}/0001-bore-cachy-ext-${CACHYOS_COMMIT}.patch
-	# )
-
-	# # use high-hz && PATCHES+=( ${DISTDIR}/0001-high-hz-${CACHYOS_COMMIT}.patch )
-	# use bcachefs && PATCHES+=( ${DISTDIR}/0001-bcachefs-${CACHYOS_COMMIT}.patch )
-	# use lrng && PATCHES+=( ${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch )
-# }
 
 src_prepare() {
 	default
