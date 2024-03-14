@@ -5,11 +5,4 @@
 		<email>black.oracle@gmail.com</email>
 		<name>Andrew Hines</name>
 	</maintainer>
-	<use>
-		<flag name="bore"> BORE (Burst-Oriented Response Enhancer) CPU Scheduler by firelzrd (BORE) </flag>
-		<flag name="bore-eevdf"> EEVDF CPU Scheduler with additional BORE tweaks (upstream default) </flag>
-		<flag name="cfs"> Enable this if you're happy with the default Linux CPU scheduler </flag>
-		<flag name="eevdf"> EEVDF CPU Scheduler - an enhanced version of Linux CFS </flag>
-		<flag name="high-hz"> CONFIG_HZ=833/1666 patch - EXPERIMENTAL! </flag>
-	</use>
 </pkgmetadata>
