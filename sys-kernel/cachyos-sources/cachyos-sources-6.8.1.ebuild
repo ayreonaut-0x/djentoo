@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="10"
+K_GENPATCHES_VER="2"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="bbf423c67d3752ad9e964e989d3f8afc4c04cc7c"
+CACHYOS_COMMIT="91baa1f2a02d2cba653b061ed42b7dafac2c413c"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -21,9 +21,7 @@ SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-amd-hdr.patch -> 0001-amd-hdr-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-mm-Mitigate-a-vmap-lock-contention-v3.patch -> 0001-mm-Mitigate-a-vmap-lock-contention-v3-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 "
 
@@ -43,9 +41,7 @@ BDEPEND=""
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-amd-hdr-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-mm-Mitigate-a-vmap-lock-contention-v3-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 )
 
