@@ -16,10 +16,7 @@ SLOT="0/199"
 IUSE="+10bit 12bit cpu_flags_ppc_vsx2 numa test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="
-	numa? ( >=sys-process/numactl-2.0.10-r1[${MULTILIB_USEDEP}] )
-	!media-libs/x265
-"
+RDEPEND="numa? ( >=sys-process/numactl-2.0.10-r1[${MULTILIB_USEDEP}] )"
 DEPEND="${RDEPEND}"
 ASM_DEPEND=">=dev-lang/nasm-2.13"
 BDEPEND="
