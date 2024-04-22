@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="6"
+K_GENPATCHES_VER="10"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="cc335b9d7419c2f0a5a51bf5bbad0004f898b9df"
+CACHYOS_COMMIT="b7ba34aea98ac6c997845ca41bd0b40a7ab8fc73"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -21,15 +21,16 @@ SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched/0001-echo-cachy.patch -> 0001-echo-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 "
+# ${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 
 LICENSE="GPL"
 SLOT="stable"
 KEYWORDS="amd64"
-IUSE=""
-REQUIRED_USE=""
+IUSE="+bore echo"
+REQUIRED_USE="^^ ( bore echo )"
 
 DEPEND="virtual/linux-sources"
 RDEPEND="
@@ -40,12 +41,13 @@ BDEPEND=""
 
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 )
+# ${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 
 src_prepare() {
+	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )
+	use echo && PATCHES+=( ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch )
 	default
 	eapply_user
 }
