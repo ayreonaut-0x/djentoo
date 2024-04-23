@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/3.6+2+13.tar.gz -> ${PN}-${PV}.tar.gz"
 # subslot = libx265 soname
 KEYWORDS="~amd64"
-SLOT="0/199"
+SLOT="0/209"
 IUSE="+10bit 12bit cpu_flags_ppc_vsx2 numa test"
 RESTRICT="!test? ( test )"
 
