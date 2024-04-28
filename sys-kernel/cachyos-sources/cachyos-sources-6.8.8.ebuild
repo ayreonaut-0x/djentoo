@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="9"
+K_GENPATCHES_VER="11"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="069491ad4d93f9ca52c6bf3fe7a4859e314c2eb8"
+CACHYOS_COMMIT="f3e87b869ab220d98c6df07b55ae54b7be0ac1b1"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -23,7 +23,6 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-echo-cachy.patch -> 0001-echo-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 "
 
 LICENSE="GPL"
@@ -42,7 +41,6 @@ BDEPEND=""
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
-	${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 )
 
 src_prepare() {
