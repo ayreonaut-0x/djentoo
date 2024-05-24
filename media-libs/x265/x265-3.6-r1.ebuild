@@ -9,7 +9,7 @@ DESCRIPTION="Library for encoding video streams into the H.265/HEVC format"
 HOMEPAGE="http://x265.org/ https://bitbucket.org/multicoreware/x265_git/ https://github.com/Patman86/x265-Mod-by-Patman"
 LICENSE="GPL-2"
 # EGIT_REPO_URI="https://github.com/Patman86/x265-Mod-by-Patman"
-SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/3.6+13+1.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/3.6+2+13.tar.gz -> ${PN}-${PV}.tar.gz"
 # subslot = libx265 soname
 KEYWORDS="~amd64"
 SLOT="0/209"
@@ -33,7 +33,7 @@ BDEPEND="
 
 src_unpack() {
 	unpack ${PN}-${PV}.tar.gz
-	export S="$(echo "${WORKDIR}/x265-Mod-by-Patman-3.6-13-1/source")"
+	export S="$(echo "${WORKDIR}/x265-Mod-by-Patman-3.6-2-13/source")"
 }
 
 # By default, the library and the encoder is configured for only one output bit
