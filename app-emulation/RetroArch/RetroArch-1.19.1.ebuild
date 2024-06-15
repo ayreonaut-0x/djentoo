@@ -14,7 +14,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="7zip alsa cg cpu_flags_arm_neon cpu_flags_arm_vfp cpu_flags_x86_sse2 cheevos debug dispmanx +egl filters ffmpeg -gles2 -gles3 hid jack kms libass libusb materialui network openal +opengl osmesa oss +ozone +pulseaudio +rgui sdl2 +truetype +threads udev v4l2 videocore vulkan wayland +X xinerama xmb xv zlib"
+IUSE="7zip alsa cg cpu_flags_arm_neon cpu_flags_arm_vfp cpu_flags_x86_sse2 cheevos debug dispmanx +egl filters ffmpeg hid jack kms libass libusb materialui network openal +opengl osmesa oss +ozone +pulseaudio +rgui sdl2 +truetype +threads udev v4l2 videocore vulkan wayland +X xinerama xmb xv zlib"
 
 REQUIRED_USE="
 	|| ( alsa jack openal oss pulseaudio )
@@ -29,8 +29,6 @@ REQUIRED_USE="
 	)
 	cg? ( opengl )
 	dispmanx? ( videocore arm )
-	gles2? ( !cg )
-	gles3? ( gles2 )
 	kms? ( egl )
 	libass? ( ffmpeg )
 	libusb? ( hid )
@@ -51,7 +49,7 @@ RDEPEND="
 	libass? ( media-libs/libass:0= )
 	libusb? ( virtual/libusb:1= )
 	openal? ( media-libs/openal:0= )
-	opengl? ( media-libs/mesa:0=[gles2?] )
+	opengl? ( media-libs/mesa:0= )
 	osmesa? ( media-libs/mesa:0=[osmesa?] )
 	pulseaudio? ( media-libs/libpulse:0= )
 	sdl2? ( media-libs/libsdl2:0=[joystick] )
@@ -108,8 +106,6 @@ src_configure() {
 		$(use_enable dispmanx) \
 		$(use_enable egl) \
 		$(use_enable ffmpeg) \
-		$(use_enable gles2 opengles) \
-		$(use_enable gles3 opengles3) \
 		$(use_enable hid) \
 		$(use_enable jack) \
 		$(use_enable kms) \
