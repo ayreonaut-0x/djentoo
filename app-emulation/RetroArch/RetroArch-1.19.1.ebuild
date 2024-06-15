@@ -22,10 +22,8 @@ REQUIRED_USE="
 	|| ( kms X wayland videocore )
 	|| ( materialui ozone rgui xmb )
 	alsa? ( threads )
-	arm? ( gles2? ( egl ) )
 	!arm? (
 		egl? ( opengl )
-		gles2? ( opengl )
 	)
 	cg? ( opengl )
 	dispmanx? ( videocore arm )
