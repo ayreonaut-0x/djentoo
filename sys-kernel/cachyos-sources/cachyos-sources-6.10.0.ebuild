@@ -5,14 +5,14 @@ EAPI=8
 EXTRAVERSION="-cachyos"
 ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
-K_EXP_GENPATCHES_NOUSE="1"
+#K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="1"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="91bd6e3a37347007b8a709839ea34ce0c0fb2546"
+CACHYOS_COMMIT="e68d74008ff156e438c91adfe7add5850387b83e"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
