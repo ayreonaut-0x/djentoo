@@ -5,14 +5,14 @@ EAPI=8
 EXTRAVERSION="-cachyos"
 ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
-#K_EXP_GENPATCHES_NOUSE="1"
+K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
 K_GENPATCHES_VER="3"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="de482bd5ac6c0eb1671169d9a5cd5484e12226fb"
+CACHYOS_COMMIT="f036a67118ed302c3611e82e0234f8d4279079af"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -27,10 +27,10 @@ SRC_URI="
 # ${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 
 LICENSE="GPL"
-SLOT="stable"
+SLOT="unstable"
 KEYWORDS="amd64"
 IUSE="+bore echo"
-RESTRICT="-binchecks mirror"
+RESTRICT="mirror"
 REQUIRED_USE="^^ ( bore echo )"
 
 DEPEND="virtual/linux-sources"
@@ -40,7 +40,9 @@ RDEPEND="
 "
 BDEPEND=""
 
-PATCHES=( ${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch )
+PATCHES=(
+	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
+)
 
 src_prepare() {
 	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )
