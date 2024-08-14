@@ -12,7 +12,7 @@ K_GENPATCHES_VER="7"
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="14801d80ef9b9346de90f3f2479603118c48ec5c"
+CACHYOS_COMMIT="9c4712879224cbd52880e1d66283e13ffdf152bc"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -38,21 +38,21 @@ RDEPEND="
 "
 BDEPEND=""
 
-# PATCHES=(
-# 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
-# )
+PATCHES=(
+	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
+)
 
-src_unpack() {
-	UNIPATCH_STRICTORDER=1
-	UNIPATCH_LIST_DEFAULT="${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch"
-	use bore && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch"
-	use echo && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch"
-	kernel-2_src_unpack
-}
-
-# src_prepare() {
-# 	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )
-# 	use echo && PATCHES+=( ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch )
-# 	default
-# 	eapply_user
+# src_unpack() {
+# 	UNIPATCH_STRICTORDER=1
+# 	UNIPATCH_LIST_DEFAULT="${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch"
+# 	use bore && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch"
+# 	use echo && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch"
+# 	kernel-2_src_unpack
 # }
+
+src_prepare() {
+	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )
+	use echo && PATCHES+=( ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch )
+	default
+	eapply_user
+}
