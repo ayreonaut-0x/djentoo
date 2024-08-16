@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="4"
+K_GENPATCHES_VER="52"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="04fb9178158a7714aeb908c7a5310c4e0d6ea4b6"
+CACHYOS_COMMIT="7b51f8cf044b156eddc6705a9fae2d919be34d7a"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -21,30 +21,31 @@ SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched/0001-echo-cachy.patch -> 0001-echo-cachy-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
 "
+# ${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
+# ${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 
 LICENSE="GPL"
-SLOT="unstable"
+SLOT="lts"
 KEYWORDS="amd64"
-IUSE="+bore echo"
-RESTRICT="mirror"
-REQUIRED_USE="^^ ( bore echo )"
+IUSE=""
+RESTRICT="-binchecks mirror"
+REQUIRED_USE=""
 
 DEPEND="virtual/linux-sources"
-RDEPEND="
-	${DEPEND}
-	sys-fs/bcachefs-tools
-"
+RDEPEND="${DEPEND}"
 BDEPEND=""
 
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-bcachefs-${CACHYOS_COMMIT}.patch
+	${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
 )
 
 src_prepare() {
-	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )
-	use echo && PATCHES+=( ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch )
 	default
 	eapply_user
 }
