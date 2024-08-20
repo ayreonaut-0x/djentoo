@@ -25,7 +25,7 @@ SRC_URI="
 "
 
 LICENSE="GPL"
-SLOT="unstable"
+SLOT="mainline"
 KEYWORDS="~amd64"
 IUSE="+bore echo"
 RESTRICT="-binchecks mirror"
@@ -41,14 +41,6 @@ BDEPEND=""
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 )
-
-# src_unpack() {
-# 	UNIPATCH_STRICTORDER=1
-# 	UNIPATCH_LIST_DEFAULT="${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch"
-# 	use bore && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch"
-# 	use echo && UNIPATCH_LIST_DEFAULT="${UNIPATCH_LIST_DEFAULT} ${DISTDIR}/0001-echo-cachy-${CACHYOS_COMMIT}.patch"
-# 	kernel-2_src_unpack
-# }
 
 src_prepare() {
 	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )

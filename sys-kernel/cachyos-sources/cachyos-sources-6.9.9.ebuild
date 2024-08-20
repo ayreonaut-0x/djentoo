@@ -24,11 +24,9 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/sched/0001-echo-cachy.patch -> 0001-echo-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0002-slab.patch -> 0002-slab-${CACHYOS_COMMIT}.patch
 "
-# ${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
-# ${CACHYOS_GIT_URI}/misc/0001-ntsync.patch -> 0001-ntsync-${CACHYOS_COMMIT}.patch
 
 LICENSE="GPL"
-SLOT="stable"
+SLOT="mainline"
 KEYWORDS="amd64"
 IUSE="+bore echo"
 RESTRICT="mirror"
@@ -44,8 +42,6 @@ BDEPEND=""
 PATCHES=(
 	${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 )
-# ${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch
-# ${DISTDIR}/0001-ntsync-${CACHYOS_COMMIT}.patch
 
 src_prepare() {
 	use bore && PATCHES+=( ${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch )

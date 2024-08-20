@@ -24,7 +24,7 @@ SRC_URI="
 "
 
 LICENSE="GPL"
-SLOT="unstable"
+SLOT="mainline"
 KEYWORDS="~amd64"
 IUSE=""
 RESTRICT="-binchecks mirror"
