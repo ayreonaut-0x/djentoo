@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="52"
+K_GENPATCHES_VER="56"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="7b51f8cf044b156eddc6705a9fae2d919be34d7a"
+CACHYOS_COMMIT="6df1ab94e174708e3bd6fc5b7ba1f01a7da8c714"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
