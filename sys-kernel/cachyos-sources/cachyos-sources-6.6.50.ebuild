@@ -7,7 +7,7 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="55"
+K_GENPATCHES_VER="57"
 
 inherit kernel-2
 detect_version
