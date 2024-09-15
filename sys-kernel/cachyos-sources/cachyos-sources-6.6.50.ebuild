@@ -5,9 +5,6 @@ EAPI=8
 EXTRAVERSION="-cachyos"
 ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
-K_EXP_GENPATCHES_NOUSE="1"
-K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="57"
 
 inherit kernel-2
 detect_version
@@ -18,7 +15,7 @@ CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACH
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
-	${KERNEL_URI} ${GENPATCHES_URI}
+	${KERNEL_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
