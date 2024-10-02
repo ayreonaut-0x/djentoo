@@ -22,7 +22,6 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-dev-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-Add-extra-GCC-optimization-flags.patch -> 0001-Add-extra-GCC-optimization-flags-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 "
@@ -49,7 +48,6 @@ src_prepare() {
 		eapply "${DISTDIR}/0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	fi
 
-	eapply "${DISTDIR}/0001-Add-extra-GCC-optimization-flags-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/0001-bcachefs-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/0001-lrng-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
