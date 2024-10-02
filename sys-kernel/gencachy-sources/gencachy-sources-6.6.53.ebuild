@@ -19,12 +19,12 @@ DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to pro
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
-	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-dev-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-Add-extra-GCC-optimization-flags.patch -> 0001-Add-extra-GCC-optimization-flags-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${CACHYOS_COMMIT}.patch
-	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-dev-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-Add-extra-GCC-optimization-flags.patch -> 0001-Add-extra-GCC-optimization-flags-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-bcachefs.patch -> 0001-bcachefs-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-lrng.patch -> 0001-lrng-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 "
 
 LICENSE="GPL"
@@ -41,17 +41,17 @@ BDEPEND=""
 src_prepare() {
 	default
 
-	eapply "${DISTDIR}/0001-cachyos-base-all-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	if use sched-dev; then
-		eapply "${DISTDIR}/0001-bore-cachy-dev-${CACHYOS_COMMIT}.patch"
+		eapply "${DISTDIR}/0001-bore-cachy-dev-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	else
-		eapply "${DISTDIR}/0001-bore-cachy-${CACHYOS_COMMIT}.patch"
+		eapply "${DISTDIR}/0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	fi
 
-	eapply "${DISTDIR}/0001-Add-extra-GCC-optimization-flags-${CACHYOS_COMMIT}.patch"
-	eapply "${DISTDIR}/0001-bcachefs-${CACHYOS_COMMIT}.patch"
-	eapply "${DISTDIR}/0001-lrng-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/0001-Add-extra-GCC-optimization-flags-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/0001-bcachefs-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/0001-lrng-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user
 }
