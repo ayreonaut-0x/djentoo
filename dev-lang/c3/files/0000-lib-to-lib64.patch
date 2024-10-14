@@ -1,0 +1,49 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 72893dc..75c5beb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -513,7 +513,7 @@ else()
+ endif()
+ 
+ install(TARGETS c3c DESTINATION bin)
+-install(DIRECTORY lib/ DESTINATION lib/c3)
++install(DIRECTORY lib/ DESTINATION lib64/c3)
+ 
+ if (C3_WITH_LLVM AND DEFINED sanitizer_runtime_libraries)
+     add_custom_command(TARGET c3c POST_BUILD
+diff --git a/src/utils/file_utils.c b/src/utils/file_utils.c
+index 2e62a84..f86569a 100644
+--- a/src/utils/file_utils.c
++++ b/src/utils/file_utils.c
+@@ -357,7 +357,7 @@ const char *find_rel_exe_dir(const char *dir)
+ 		path[strlen_path - 1] = '\0';
+ 	}
+ 	struct stat info;
+-	const char *attempts[5] = { "/../", "/lib/", "/../lib/", "/", "/../../lib/" };
++	const char *attempts[5] = { "/../", "/lib64/", "/../lib64/", "/", "/../../lib64/" };
+ 
+ 	for (size_t i = 0; i < 5; i++)
+ 	{
+@@ -396,16 +396,16 @@ const char *find_lib_dir(void)
+ 		path[strlen_path - 1] = '\0';
+ 	}
+ 	const char *lib_path = NULL;
+-	if ((lib_path = lib_find(path, "/../lib/c3/"))) goto DONE;
+-	if ((lib_path = lib_find(path, "/../lib/"))) goto DONE;
+-	if ((lib_path = lib_find(path, "/lib/c3/"))) goto DONE;
+-	if ((lib_path = lib_find(path, "/lib/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/../lib64/c3/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/../lib64/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/lib64/c3/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/lib64/"))) goto DONE;
+ 	if ((lib_path = lib_find(path, "/c3/"))) goto DONE;
+ 	if ((lib_path = lib_find(path, "/"))) goto DONE;
+ 	if ((lib_path = lib_find(path, "/../c3/"))) goto DONE;
+ 	if ((lib_path = lib_find(path, "/../"))) goto DONE;
+-	if ((lib_path = lib_find(path, "/../../lib/c3/"))) goto DONE;
+-	if ((lib_path = lib_find(path, "/../../lib/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/../../lib64/c3/"))) goto DONE;
++	if ((lib_path = lib_find(path, "/../../lib64/"))) goto DONE;
+ 
+ 	INFO_LOG("Could not find the standard library /lib/std/");
+ DONE:;
