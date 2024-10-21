@@ -28,7 +28,7 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="lts"
 KEYWORDS="amd64"
-IUSE="sched-dev"
+IUSE=""
 RESTRICT="-binchecks mirror"
 REQUIRED_USE=""
 
