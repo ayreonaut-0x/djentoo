@@ -26,7 +26,7 @@ S="${WORKDIR}/c3c-${PV}"
 
 src_prepare() {
 	eapply "${FILESDIR}/0000-lib-to-lib64.patch"
-	eapply "${FILESDIR}/0000-reenable-mimalloc.patch"
+	use mimalloc && eapply "${FILESDIR}/0000-reenable-mimalloc.patch"
 	cmake_src_prepare
 }
 
