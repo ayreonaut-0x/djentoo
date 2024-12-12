@@ -18,7 +18,7 @@ IUSE="+mimalloc test"
 KEYWORDS="~amd64"
 RESTRICT="!test? ( test )"
 
-DEPEND=">=sys-devel/llvm-15"
+DEPEND=">=llvm-core/llvm-15"
 RDEPEND="${DEPEND}"
 BDEPEND="test? ( ${PYTHON_DEPS} )"
 
