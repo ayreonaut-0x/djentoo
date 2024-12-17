@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="2"
+K_GENPATCHES_VER="8"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="ca5815d435bb71d01da8db94f7ca0cad7cb40b70"
+CACHYOS_COMMIT="2443882c10ec5cea071964adc0ddfdf46d3a0fbe"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -22,6 +22,8 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
+	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 	${CACHYOS_GIT_URI}/misc/0001-preempt-lazy.patch -> 0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch
 "
 
@@ -40,8 +42,10 @@ src_prepare() {
 	default
 
 	eapply "${DISTDIR}/0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use bore && eapply "${DISTDIR}/0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use prjc && eapply "${DISTDIR}/0001-prjc-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	eapply "${DISTDIR}/0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user
