@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="8"
+K_GENPATCHES_VER="10"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="2443882c10ec5cea071964adc0ddfdf46d3a0fbe"
+CACHYOS_COMMIT="fe9a04ee21c450af984a5609e69f00176b6bf97e"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -31,7 +31,7 @@ LICENSE="GPL"
 SLOT="${KV_MAJOR}.${KV_MINOR}"
 KEYWORDS="~amd64"
 IUSE="+bore prjc"
-RESTRICT="-binchecks mirror"
+RESTRICT="mirror"
 REQUIRED_USE="|| ( bore prjc )"
 
 DEPEND="virtual/linux-sources"
@@ -49,4 +49,5 @@ src_prepare() {
 	eapply "${DISTDIR}/0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user
+	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 }
