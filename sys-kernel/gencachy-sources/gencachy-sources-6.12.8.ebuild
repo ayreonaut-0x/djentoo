@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="9"
+K_GENPATCHES_VER="11"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="991805bf8102c3ef4c59a269732609718088bed5"
+CACHYOS_COMMIT="92810741a335c3b0833c9653b6fd162dbbfcc0d0"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -39,9 +39,7 @@ RDEPEND=""
 BDEPEND=""
 
 src_prepare() {
-	kernel-2-src_prepare
-
-	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
+	default
 
 	eapply "${DISTDIR}/0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
@@ -51,4 +49,5 @@ src_prepare() {
 	eapply "${DISTDIR}/0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user
+	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 }
