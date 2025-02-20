@@ -7,12 +7,12 @@ ETYPE="sources"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="12"
+K_GENPATCHES_VER="19"
 
 inherit kernel-2
 detect_version
 
-CACHYOS_COMMIT="c8e2591aa83fdec3345f9699030926715db727d0"
+CACHYOS_COMMIT="54490391155693163a524f821935cee3ed25f1d4"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -30,7 +30,7 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="${KV_MAJOR}.${KV_MINOR}"
 KEYWORDS="~amd64"
-IUSE="+bore prjc"
+IUSE="+bore clang-dkms clang-polly prjc"
 RESTRICT="mirror"
 REQUIRED_USE="|| ( bore prjc )"
 
@@ -42,10 +42,10 @@ src_prepare() {
 	default
 
 	eapply "${DISTDIR}/0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
-	eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	use clang-dkms && eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use bore && eapply "${DISTDIR}/0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use prjc && eapply "${DISTDIR}/0001-prjc-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
-	eapply "${DISTDIR}/0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	use clang-polly && eapply "${DISTDIR}/0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user

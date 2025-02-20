@@ -30,7 +30,7 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="${KV_MAJOR}.${KV_MINOR}"
 KEYWORDS="~amd64"
-IUSE="+bore clang-extra prjc"
+IUSE="+bore clang-dkms clang-polly prjc"
 RESTRICT="mirror"
 REQUIRED_USE="|| ( bore prjc )"
 
@@ -42,10 +42,10 @@ src_prepare() {
 	default
 
 	eapply "${DISTDIR}/0001-cachyos-base-all-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
-	use clang-extra && eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	use clang-dkms && eapply "${DISTDIR}/dkms-clang-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use bore && eapply "${DISTDIR}/0001-bore-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	use prjc && eapply "${DISTDIR}/0001-prjc-cachy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
-	use clang-extra && eapply "${DISTDIR}/0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
+	use clang-polly && eapply "${DISTDIR}/0001-clang-polly-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 	eapply "${DISTDIR}/0001-preempt-lazy-${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}.patch"
 
 	eapply_user
