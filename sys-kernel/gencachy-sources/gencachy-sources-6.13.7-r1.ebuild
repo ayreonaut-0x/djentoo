@@ -61,8 +61,9 @@ UNIPATCH_LIST=" \
 src_unpack() {
 	pushd "${WORKDIR}" || die
 	tar xf "${DISTDIR}/linux-${SLOT}.tar.xz"
+	mv "linux-${SLOT}" "linux-${SLOT}${EXTRAVERSION}" || die
 	popd
-	S="${WORKDIR}/linux-${SLOT}"
+	S="${WORKDIR}/linux-${SLOT}${EXTRAVERSION}"
 }
 
 src_prepare() {
