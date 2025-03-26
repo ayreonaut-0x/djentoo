@@ -68,7 +68,7 @@ _GENPATCHES_EXTRA=(
 src_unpack() {
 	pushd "${WORKDIR}" || die
 	tar xf "${DISTDIR}/linux-${SLOT}.tar.xz"
-	mv "linux-${SLOT}" "linux-${SLOT}${EXTRAVERSION}" || die
+	mv "linux-${SLOT}" "linux-${SLOT}.${KV_PATCH}${EXTRAVERSION}" || die
 	popd
 
 	mkdir "${WORKDIR}/${_GENPATCHNAME}.base" && pushd "${WORKDIR}/${_GENPATCHNAME}.base" || die
@@ -79,7 +79,7 @@ src_unpack() {
 	tar xf "${DISTDIR}/${_GENPATCHNAME}.extras.tar.xz" || die
 	popd
 
-	S="${WORKDIR}/linux-${SLOT}${EXTRAVERSION}"
+	S="${WORKDIR}/linux-${SLOT}.${KV_PATCH}${EXTRAVERSION}"
 	echo "${EXTRAVERSION}" > "${S}/localversion" || die
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 }
