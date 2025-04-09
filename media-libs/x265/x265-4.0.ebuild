@@ -9,12 +9,14 @@ DESCRIPTION="Library for encoding video streams into the H.265/HEVC format"
 HOMEPAGE="http://x265.org/ https://bitbucket.org/multicoreware/x265_git/ https://github.com/Patman86/x265-Mod-by-Patman"
 LICENSE="GPL-2"
 # EGIT_REPO_URI="https://github.com/Patman86/x265-Mod-by-Patman"
-SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/4.0+4+4.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/4.0+4+4.tar.gz -> ${PN}-${PV}-patman.tar.gz"
 # subslot = libx265 soname
 KEYWORDS="~amd64"
 SLOT="0/212"
-IUSE="+10bit 12bit cpu_flags_ppc_vsx2 numa test"
-RESTRICT="!test? ( test )"
+IUSE="+10bit +12bit cpu_flags_ppc_vsx2 numa test"
+RESTRICT="
+	!test? ( test )
+	mirror"
 
 RDEPEND="numa? ( >=sys-process/numactl-2.0.10-r1[${MULTILIB_USEDEP}] )"
 DEPEND="${RDEPEND}"
@@ -32,8 +34,8 @@ BDEPEND="
 # )
 
 src_unpack() {
-	unpack ${PN}-${PV}.tar.gz
-	export S="$(echo "${WORKDIR}/x265-Mod-by-Patman-4.0-4-4/source")"
+	unpack ${PN}-${PV}-patman.tar.gz
+	export S="${WORKDIR}/x265-Mod-by-Patman-4.0-4-4/source"
 }
 
 # By default, the library and the encoder is configured for only one output bit
