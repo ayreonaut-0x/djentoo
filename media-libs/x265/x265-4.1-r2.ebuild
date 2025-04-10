@@ -18,7 +18,7 @@ SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/${PV}+
 # subslot = libx265 soname
 KEYWORDS="~amd64"
 SLOT="0/215"
-IUSE="+10bit +12bit cpu_flags_ppc_vsx2 numa test"
+IUSE="+10bit 12bit lto cpu_flags_ppc_vsx2 numa test"
 RESTRICT="
 	!test? ( test )
 	mirror"
@@ -162,6 +162,7 @@ multilib_src_configure() {
 		-DENABLE_TESTS=$(usex test ON OFF)
 		$(multilib_is_native_abi || echo "-DENABLE_CLI=OFF")
 		-DENABLE_PIC=ON
+		-DENABLE_LTO=$(usex lto ON OFF)
 		-DENABLE_LIBNUMA=$(usex numa ON OFF)
 		-DGIT_ARCHETYPE=1 #814116
 		-DLIB_INSTALL_DIR="$(get_libdir)"
