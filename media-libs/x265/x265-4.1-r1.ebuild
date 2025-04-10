@@ -8,11 +8,16 @@ inherit cmake flag-o-matic multilib-minimal multibuild
 DESCRIPTION="Library for encoding video streams into the H.265/HEVC format"
 HOMEPAGE="http://x265.org/ https://bitbucket.org/multicoreware/x265_git/ https://github.com/Patman86/x265-Mod-by-Patman"
 LICENSE="GPL-2"
+
 # EGIT_REPO_URI="https://github.com/Patman86/x265-Mod-by-Patman"
-SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/4.1+79+12.tar.gz -> ${PN}-${PV}-patman.tar.gz"
+PATMAN_PATCH=79
+PATMAN_REV=12
+PATMAN_VER="${PATMAN_PATCH}-${PATMAN_REV}"
+
+SRC_URI="https://github.com/Patman86/x265-Mod-by-Patman/archive/refs/tags/${PV}+${PATMAN_PATCH}+${PATMAN_REV}.tar.gz -> ${PN}-${PV}-${PATMAN_VER}.tar.gz"
 # subslot = libx265 soname
 KEYWORDS="~amd64"
-SLOT="0/212"
+SLOT="0/215"
 IUSE="+10bit +12bit cpu_flags_ppc_vsx2 numa test"
 RESTRICT="
 	!test? ( test )
@@ -34,8 +39,8 @@ BDEPEND="
 # )
 
 src_unpack() {
-	unpack ${PN}-${PV}-patman.tar.gz
-	export S="${WORKDIR}/x265-Mod-by-Patman-4.1-79-12/source"
+	unpack ${PN}-${PV}-${PATMAN_VER}.tar.gz
+	export S="${WORKDIR}/x265-Mod-by-Patman-${PV}-${PATMAN_VER}/source"
 }
 
 # By default, the library and the encoder is configured for only one output bit
