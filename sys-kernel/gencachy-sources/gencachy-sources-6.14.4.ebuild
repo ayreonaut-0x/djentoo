@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="3"
+K_GENPATCHES_VER="5"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="d83b6bd4ebbfe349365af770c281346070588a8b"
+CACHYOS_COMMIT="b2f31795ab58ef9d3b9e26e7687d77d249eb740b"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -40,32 +40,8 @@ DEPEND="virtual/linux-sources"
 RDEPEND=""
 BDEPEND=""
 
-_GENPATCH_LIST=(
-	"1000_linux-6.14.1.patch"
-	"1001_linux-6.14.2.patch"
-	"1510_fs-enable-link-security-restrictions-by-default.patch"
-	"1700_sparc-address-warray-bound-warnings.patch"
-	"1730_parisc-Disable-prctl.patch"
-	"2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
-	"2901_permit-menuconfig-sorting.patch"
-	"2910_bfp-mark-get-entry-ip-as--maybe-unused.patch"
-	"2920_sign-file-patch-for-libressl.patch"
-	"2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
-	"3000_Support-printing-firmware-info.patch"
-	"4567_distro-Gentoo-Kconfig.patch"
-)
-
-_CACHYPATCH_LIST=(
-	"0001-cachyos-base-all-${CACHYOS_VERSION}.patch"
-)
-
 src_unpack() {
 	cd "${WORKDIR}" || die
-
-	use bore && _CACHYPATCH_LIST+=( "0001-bore-cachy-${CACHYOS_VERSION}.patch" )
-	use prjc && _CACHYPATCH_LIST+=( "0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
-	use clang-polly && _CACHYPATCH_LIST+=( "0001-clang-polly-${CACHYOS_VERSION}.patch" )
-	use clang-dkms && _CACHYPATCH_LIST+=( "dkms-clang-${CACHYOS_VERSION}.patch" )
 
 	tar xf "${DISTDIR}/linux-${SLOT}.tar.xz" || die
 	mv "linux-${SLOT}" "linux-${SLOT}.${KV_PATCH}${EXTRAVERSION}" || die
@@ -81,13 +57,30 @@ src_unpack() {
 }
 
 src_prepare() {
-	for p in ${_GENPATCH_LIST[@]}; do
-		eapply "${WORKDIR}/${p}"
-	done
+	local _patchlist=(
+		"${WORKDIR}/1000_linux-6.14.1.patch"
+		"${WORKDIR}/1001_linux-6.14.2.patch"
+		"${WORKDIR}/1002_linux-6.14.3.patch"
+		"${WORKDIR}/1003_linux-6.14.4.patch"
+		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
+		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
+		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
+		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
+		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
+		"${WORKDIR}/2910_bfp-mark-get-entry-ip-as--maybe-unused.patch"
+		"${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
+		"${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
+		"${WORKDIR}/3000_Support-printing-firmware-info.patch"
+		"${WORKDIR}/4567_distro-Gentoo-Kconfig.patch"
+		"${DISTDIR}/0001-cachyos-base-all-${CACHYOS_VERSION}.patch"
+	)
 
-	for p in ${_CACHYPATCH_LIST[@]}; do
-		eapply "${DISTDIR}/${p}"
-	done
+	use bore && _patchlist+=( "${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch" )
+	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
+	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
+	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
+
+	for p in ${_patchlist[@]}; do eapply "${p}"; done
 
 	eapply_user
 }
