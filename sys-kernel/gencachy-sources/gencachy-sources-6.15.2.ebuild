@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="5"
+K_GENPATCHES_VER="3"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="b2f31795ab58ef9d3b9e26e7687d77d249eb740b"
+CACHYOS_COMMIT="b9641f7e1eb23f6d0e7ccc3f29ff88d61eca0f37"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -58,16 +58,13 @@ src_unpack() {
 
 src_prepare() {
 	local _patchlist=(
-		"${WORKDIR}/1000_linux-6.14.1.patch"
-		"${WORKDIR}/1001_linux-6.14.2.patch"
-		"${WORKDIR}/1002_linux-6.14.3.patch"
-		"${WORKDIR}/1003_linux-6.14.4.patch"
+		"${WORKDIR}/1000_linux-6.15.1.patch"
+		"${WORKDIR}/1001_linux-6.15.2.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
-		"${WORKDIR}/2910_bfp-mark-get-entry-ip-as--maybe-unused.patch"
 		"${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
 		"${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
 		"${WORKDIR}/3000_Support-printing-firmware-info.patch"
@@ -79,6 +76,8 @@ src_prepare() {
 	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
+
+	_patchlist+=("${FILESDIR}/${SLOT}/asus-wmi-config-suspend-s2idle-fix.patch")
 
 	for p in ${_patchlist[@]}; do eapply "${p}"; done
 
