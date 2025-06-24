@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="2"
+K_GENPATCHES_VER="4"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="06b5d7be085196ba1411b1ef74dabb3ced321f98"
+CACHYOS_COMMIT="1fc243888f62589785f2a9502445aa6ea2b3188f"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -59,6 +59,8 @@ src_unpack() {
 src_prepare() {
 	local _patchlist=(
 		"${WORKDIR}/1000_linux-6.15.1.patch"
+		"${WORKDIR}/1001_linux-6.15.2.patch"
+		"${WORKDIR}/1002_linux-6.15.3.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
@@ -75,6 +77,8 @@ src_prepare() {
 	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
+
+	_patchlist+=("${FILESDIR}/${SLOT}/asus-wmi-config-suspend-s2idle-fix.patch")
 
 	for p in ${_patchlist[@]}; do eapply "${p}"; done
 
