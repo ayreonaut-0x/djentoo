@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="4"
+K_GENPATCHES_VER="6"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="1fc243888f62589785f2a9502445aa6ea2b3188f"
+CACHYOS_COMMIT="1bedc78a049c74cf7535e0cafc1829fdd185a27d"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -23,7 +23,7 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 SRC_URI="
 	${KERNEL_URI} ${GENPATCHES_URI}
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_VERSION}.patch
-	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
+	${CACHYOS_GIT_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
@@ -61,6 +61,8 @@ src_prepare() {
 		"${WORKDIR}/1000_linux-6.15.1.patch"
 		"${WORKDIR}/1001_linux-6.15.2.patch"
 		"${WORKDIR}/1002_linux-6.15.3.patch"
+		"${WORKDIR}/1003_linux-6.15.4.patch"
+		"${WORKDIR}/1004_linux-6.15.5.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
