@@ -17,6 +17,8 @@ detect_arch
 CACHYOS_COMMIT="ef8f496b033b044a0c2a29db290f87067885325e"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
+AUFS_COMMIT="6e6bfeb9b42f25deb1dfdcbf42306969961ded08"
+AUFS_GIT_URI="https://github.com/sfjro/aufs-standalone"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
@@ -28,6 +30,7 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/misc/0001-aufs-6.16-merge-v20250616.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
+	${AUFS_GIT_URI}
 "
 
 LICENSE="GPL"
@@ -57,9 +60,9 @@ src_unpack() {
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 
 	if use aufs; then
-		git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone"
+		git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone" > /dev/null || die
 		pushd "${WORKDIR}/aufs-standalone"
-		git checkout origin/aufs6.16
+		git checkout origin/aufs6.16 > /dev/null || die
 		popd
 	fi
 }
