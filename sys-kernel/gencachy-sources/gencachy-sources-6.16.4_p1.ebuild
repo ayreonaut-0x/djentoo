@@ -14,7 +14,7 @@ inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="fbff1cb24201b2e1039d33dbe04b3ae6ba376e56"
+CACHYOS_COMMIT="ef8f496b033b044a0c2a29db290f87067885325e"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -26,8 +26,8 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-aufs-6.16-merge-v20250616.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
-	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
+	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
 
 LICENSE="GPL"
@@ -55,6 +55,13 @@ src_unpack() {
 	S="${WORKDIR}/linux-${SLOT}.${KV_PATCH}${EXTRAVERSION}"
 	echo "${EXTRAVERSION}" > "${S}/localversion" || die
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
+
+	if use aufs; then
+		git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone"
+		pushd "${WORKDIR}/aufs-standalone"
+		git checkout origin/aufs6.16
+		popd
+	fi
 }
 
 src_prepare() {
@@ -64,8 +71,8 @@ src_prepare() {
 		"${WORKDIR}/1002_linux-6.16.3.patch"
 		"${WORKDIR}/1003_linux-6.16.4.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
-		# "${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
-		# "${WORKDIR}/1730_parisc-Disable-prctl.patch"
+		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
+		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
 		"${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
@@ -77,7 +84,20 @@ src_prepare() {
 
 	use bore && _patchlist+=( "${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch" )
 	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
-	use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
+	# use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
+
+	if use aufs; then
+		_patchlist+=(
+			"${WORKDIR}/aufs-standalone/aufs6-kbuild.patch"
+			"${WORKDIR}/aufs-standalone/aufs6-base.patch"
+			"${WORKDIR}/aufs-standalone/aufs6-mmap.patch"
+			"${WORKDIR}/aufs-standalone/aufs6-standalone.patch"
+		)
+
+		cp "${WORKDIR}/aufs-standalone/include/uapi/linux/aufs_type.h" "${S}/include/uapi/linux/"
+		cp -Rf "${WORKDIR}/aufs-standalone/fs" "${S}"
+	fi
+
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
 
