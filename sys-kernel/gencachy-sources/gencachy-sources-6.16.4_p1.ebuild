@@ -30,7 +30,6 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/misc/0001-aufs-6.16-merge-v20250616.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
-	${AUFS_GIT_URI}
 "
 
 LICENSE="GPL"
@@ -59,12 +58,12 @@ src_unpack() {
 	echo "${EXTRAVERSION}" > "${S}/localversion" || die
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 
-	if use aufs; then
-		git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone" > /dev/null || die
-		pushd "${WORKDIR}/aufs-standalone"
-		git checkout origin/aufs6.16 > /dev/null || die
-		popd
-	fi
+	# if use aufs; then
+	# 	# git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone" > /dev/null || die
+	# 	pushd "${WORKDIR}/aufs-standalone"
+	# 	git checkout origin/aufs6.16 > /dev/null || die
+	# 	popd
+	# fi
 }
 
 src_prepare() {
@@ -89,17 +88,17 @@ src_prepare() {
 	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
 	# use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
 
-	if use aufs; then
-		_patchlist+=(
-			"${WORKDIR}/aufs-standalone/aufs6-kbuild.patch"
-			"${WORKDIR}/aufs-standalone/aufs6-base.patch"
-			"${WORKDIR}/aufs-standalone/aufs6-mmap.patch"
-			"${WORKDIR}/aufs-standalone/aufs6-standalone.patch"
-		)
+	# if use aufs; then
+	# 	_patchlist+=(
+	# 		"${WORKDIR}/aufs-standalone/aufs6-kbuild.patch"
+	# 		"${WORKDIR}/aufs-standalone/aufs6-base.patch"
+	# 		"${WORKDIR}/aufs-standalone/aufs6-mmap.patch"
+	# 		"${WORKDIR}/aufs-standalone/aufs6-standalone.patch"
+	# 	)
 
-		cp "${WORKDIR}/aufs-standalone/include/uapi/linux/aufs_type.h" "${S}/include/uapi/linux/"
-		cp -Rf "${WORKDIR}/aufs-standalone/fs" "${S}"
-	fi
+	# 	cp "${WORKDIR}/aufs-standalone/include/uapi/linux/aufs_type.h" "${S}/include/uapi/linux/"
+	# 	cp -Rf "${WORKDIR}/aufs-standalone/fs" "${S}"
+	# fi
 
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
