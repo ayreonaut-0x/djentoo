@@ -8,17 +8,15 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="5"
+K_GENPATCHES_VER="4"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="ef8f496b033b044a0c2a29db290f87067885325e"
+CACHYOS_COMMIT="5d016e9c40a18efd357351faf922e341182ff14a"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
-AUFS_COMMIT="6e6bfeb9b42f25deb1dfdcbf42306969961ded08"
-AUFS_GIT_URI="https://github.com/sfjro/aufs-standalone"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
@@ -57,13 +55,6 @@ src_unpack() {
 	S="${WORKDIR}/linux-${SLOT}.${KV_PATCH}${EXTRAVERSION}"
 	echo "${EXTRAVERSION}" > "${S}/localversion" || die
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
-
-	# if use aufs; then
-	# 	# git clone https://github.com/sfjro/aufs-standalone.git "${WORKDIR}/aufs-standalone" > /dev/null || die
-	# 	pushd "${WORKDIR}/aufs-standalone"
-	# 	git checkout origin/aufs6.16 > /dev/null || die
-	# 	popd
-	# fi
 }
 
 src_prepare() {
@@ -71,7 +62,6 @@ src_prepare() {
 		"${WORKDIR}/1000_linux-6.16.1.patch"
 		"${WORKDIR}/1001_linux-6.16.2.patch"
 		"${WORKDIR}/1002_linux-6.16.3.patch"
-		"${WORKDIR}/1003_linux-6.16.4.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
@@ -86,20 +76,7 @@ src_prepare() {
 
 	use bore && _patchlist+=( "${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch" )
 	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
-	# use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
-
-	# if use aufs; then
-	# 	_patchlist+=(
-	# 		"${WORKDIR}/aufs-standalone/aufs6-kbuild.patch"
-	# 		"${WORKDIR}/aufs-standalone/aufs6-base.patch"
-	# 		"${WORKDIR}/aufs-standalone/aufs6-mmap.patch"
-	# 		"${WORKDIR}/aufs-standalone/aufs6-standalone.patch"
-	# 	)
-
-	# 	cp "${WORKDIR}/aufs-standalone/include/uapi/linux/aufs_type.h" "${S}/include/uapi/linux/"
-	# 	cp -Rf "${WORKDIR}/aufs-standalone/fs" "${S}"
-	# fi
-
+	use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
 
