@@ -8,7 +8,7 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="8"
+K_GENPATCHES_VER="9"
 
 inherit kernel-2
 detect_version
@@ -65,6 +65,7 @@ src_prepare() {
 		"${WORKDIR}/1003_linux-6.16.4.patch"
 		"${WORKDIR}/1004_linux-6.16.5.patch"
 		"${WORKDIR}/1005_linux-6.16.6.patch"
+		"${WORKDIR}/1006_linux-6.16.7.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
