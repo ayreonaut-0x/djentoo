@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="2"
+K_GENPATCHES_VER="5"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="d99ad9a54bdea6733d18ce041694e350354cb428"
+CACHYOS_COMMIT="bfcf34bd22aa1fa740c5d60a8f126919cfdacfdf"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -25,7 +25,7 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_GIT_URI}/misc/0001-aufs-6.17-merge-v20250922.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
+	${CACHYOS_GIT_URI}/misc/0001-aufs-6.17-merge-v20251006.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
@@ -59,11 +59,13 @@ src_unpack() {
 
 src_prepare() {
 	local _patchlist=(
+		"${WORKDIR}/1000_linux-6.17.1.patch"
+		"${WORKDIR}/1001_linux-6.17.2.patch"
+		"${WORKDIR}/1002_linux-6.17.3.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
-		"${WORKDIR}/2101_blk-mq_fix_blk_mq_tags_double_free_while_nr_requests_grown.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
 		"${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
 		"${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
