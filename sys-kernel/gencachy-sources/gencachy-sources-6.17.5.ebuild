@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="4"
+K_GENPATCHES_VER="7"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="caa1cd9122cedc84961c357c39e82784d8265542"
+CACHYOS_COMMIT="b6045ec5a50b75b2553f65314a651a2aa953dc13"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -25,6 +25,7 @@ SRC_URI="
 	${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
+	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy-lfbmq.patch -> 0001-prjc-cachy-lfbmq-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-aufs-6.17-merge-v20251006.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
@@ -33,9 +34,12 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="${KV_MAJOR}.${KV_MINOR}"
 KEYWORDS="~amd64"
-IUSE="aufs +bore clang-dkms clang-polly prjc"
+IUSE="aufs +bore clang-dkms clang-polly prjc lfbmq"
 RESTRICT="mirror"
-REQUIRED_USE="|| ( bore prjc )"
+REQUIRED_USE="
+	|| ( bore prjc )
+	lfbmq? ( prjc )
+"
 
 DEPEND="virtual/linux-sources"
 RDEPEND=""
@@ -61,6 +65,9 @@ src_prepare() {
 	local _patchlist=(
 		"${WORKDIR}/1000_linux-6.17.1.patch"
 		"${WORKDIR}/1001_linux-6.17.2.patch"
+		"${WORKDIR}/1002_linux-6.17.3.patch"
+		"${WORKDIR}/1003_linux-6.17.4.patch"
+		"${WORKDIR}/1004_linux-6.17.5.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
@@ -75,7 +82,10 @@ src_prepare() {
 	)
 
 	use bore && _patchlist+=( "${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch" )
-	use prjc && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
+	if use prjc; then
+		use lfbmq && _patchlist+=( "${DISTDIR}/0001-prjc-cachy-lfbmq-${CACHYOS_VERSION}.patch" ) \
+			|| _patchlist+=( "${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch" )
+	fi
 	use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
