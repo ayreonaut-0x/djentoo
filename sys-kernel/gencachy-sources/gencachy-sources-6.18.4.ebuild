@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="3"
+K_GENPATCHES_VER="6"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="e266fbc7f36273ebbc62a9bffda02e3882eb8f6c"
+CACHYOS_COMMIT="834da202117f5750fd17a927eb48dbbc0892b653"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -61,6 +61,8 @@ src_prepare() {
 	local _patchlist=(
 		"${WORKDIR}/1000_linux-6.18.1.patch"
 		"${WORKDIR}/1001_linux-6.18.2.patch"
+		"${WORKDIR}/1002_linux-6.18.3.patch"
+		"${WORKDIR}/1003_linux-6.18.4.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
