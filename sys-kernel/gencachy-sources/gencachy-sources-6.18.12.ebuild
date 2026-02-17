@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="11"
+K_GENPATCHES_VER="13"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="bcb46c68ea115d9e0f534d85646f60f70e9668fb"
+CACHYOS_COMMIT="1ecedacb65898965fc0edffef46a64db3a7ce0c8"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -69,10 +69,12 @@ src_prepare() {
 		"${WORKDIR}/1006_linux-6.18.7.patch"
 		"${WORKDIR}/1007_linux-6.18.8.patch"
 		"${WORKDIR}/1008_linux-6.18.9.patch"
+		"${WORKDIR}/1009_linux-6.18.10.patch"
+		"${WORKDIR}/1010_linux-6.18.11.patch"
+		"${WORKDIR}/1011_linux-6.18.12.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
-		"${WORKDIR}/1910_ceph_fix_kernel_crash_in_ceph_open.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
 		"${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
