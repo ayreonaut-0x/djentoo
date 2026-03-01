@@ -8,13 +8,13 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="13"
+K_GENPATCHES_VER="14"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_COMMIT="1ecedacb65898965fc0edffef46a64db3a7ce0c8"
+CACHYOS_COMMIT="eb447e64c941a9a385d8eb34f573298ce379e22b"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
@@ -28,7 +28,9 @@ ${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERS
 ${CACHYOS_GIT_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20251208.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 ${CACHYOS_GIT_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 ${CACHYOS_GIT_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
+${CACHYOS_GIT_URI}/misc/nap-governor.patch -> nap-governor-${CACHYOS_VERSION}.patch
 ${CACHYOS_GIT_URI}/misc/poc-selector.patch -> poc-selector-${CACHYOS_VERSION}.patch
+${CACHYOS_GIT_URI}/misc/reflex-governor.patch -> reflex-governor-${CACHYOS_VERSION}.patch
 "
 
 LICENSE="GPL"
@@ -72,6 +74,7 @@ src_prepare() {
 		"${WORKDIR}/1009_linux-6.18.10.patch"
 		"${WORKDIR}/1010_linux-6.18.11.patch"
 		"${WORKDIR}/1011_linux-6.18.12.patch"
+		"${WORKDIR}/1012_linux-6.18.13.patch"
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
@@ -90,7 +93,10 @@ src_prepare() {
 	use aufs && _patchlist+=( "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch" )
 	use clang-polly && _patchlist+=( "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch" )
 	use clang-dkms && _patchlist+=( "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch" )
-	_patchlist+=( "${DISTDIR}/poc-selector-${CACHYOS_VERSION}.patch" )
+	_patchlist+=(
+		"${DISTDIR}/nap-governor-${CACHYOS_VERSION}.patch"
+		"${DISTDIR}/poc-selector-${CACHYOS_VERSION}.patch"
+		"${DISTDIR}/reflex-governor-${CACHYOS_VERSION}.patch" )
 
 	for p in ${_patchlist[@]}; do eapply "${p}"; done
 
