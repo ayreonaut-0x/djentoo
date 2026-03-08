@@ -14,7 +14,7 @@ inherit kernel-2
 detect_version
 detect_arch
 
-CACHY_RELEASE="${KV_MAJOR}.${KV_MINOR}.${KV_PATCH}-1"
+CACHY_RELEASE="-1"
 CACHYOS_COMMIT="776ee4906c343ffb826afc390a923b0958617383"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 
@@ -24,7 +24,7 @@ DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to pro
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
 SRC_URI="
-	https://github.com/CachyOS/linux/releases/download/cachyos-${CACHY_RELEASE}/cachyos-${CACHY_RELEASE}.tar.gz
+	https://github.com/CachyOS/linux/releases/download/cachyos-${OKV}${CACHY_RELEASE}/cachyos-${OKV}${CACHY_RELEASE}.tar.gz
 	${CACHYOS_GIT_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_GIT_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20251208.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
@@ -58,15 +58,15 @@ BDEPEND=""
 src_unpack() {
 	cd "${WORKDIR}" || die
 
-	tar xf "${DISTDIR}/cachyos-${CACHY_RELEASE}.tar.gz" || die
-	# mv "linux-${KV_MAJOR}.${KV_MINOR}" "linux-${KV_MAJOR}.${KV_MINOR}.${KV_PATCH}${EXTRAVERSION}" || die
+	tar xf "${DISTDIR}/cachyos-${OKV}${CACHY_RELEASE}.tar.gz" || die
+	mv "cachyos-${OKV}${CACHY_RELEASE}" "linux-${OKV}${EXTRAVERSION}" || die
 
 	local genpatch_archives=( base extras )
 	for gpa in ${genpatch_archives[@]};	do
 		tar xf "${DISTDIR}/genpatches-${KV_MAJOR}.${KV_MINOR}-${K_GENPATCHES_VER}.${gpa}.tar.xz" || die
 	done
 
-	S="${WORKDIR}/cachyos-${CACHY_RELEASE}"
+	S="${WORKDIR}/linux-${OKV}${EXTRAVERSION}"
 	echo "${EXTRAVERSION}" > "${S}/localversion" || die
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 }
