@@ -22,11 +22,6 @@ CACHYOS_GIT_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACH
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
-# SRC_URI="
-# https://github.com/CachyOS/linux/releases/download/cachyos-6.19.6-1/cachyos-6.19.6-1.tar.gz
-# ${GENPATCHES_URI}
-# ${CACHYOS_GIT_URI}/all/0001-cachyos-base-all.patch -> 0001-cachyos-base-all-${CACHYOS_VERSION}.patch
-# "
 
 SRC_URI="
 	https://github.com/CachyOS/linux/releases/download/cachyos-${CACHY_RELEASE}/cachyos-${CACHY_RELEASE}.tar.gz
@@ -47,13 +42,13 @@ KEYWORDS="~amd64"
 IUSE="misc aufs +bore clang-dkms clang-polly nap-governor poc-selector prjc reflex-governor"
 RESTRICT="mirror"
 REQUIRED_USE="
-|| ( bore prjc )
-aufs? ( misc )
-clang-dkms? ( misc )
-clang-polly? ( misc )
-nap-governor? ( misc )
-poc-selector? ( misc )
-reflex-governor? ( misc )
+	|| ( bore prjc )
+	aufs? ( misc )
+	clang-dkms? ( misc )
+	clang-polly? ( misc )
+	nap-governor? ( misc )
+	poc-selector? ( misc )
+	reflex-governor? ( misc )
 "
 
 DEPEND="virtual/linux-sources"
