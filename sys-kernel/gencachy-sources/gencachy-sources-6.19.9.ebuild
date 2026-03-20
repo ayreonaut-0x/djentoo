@@ -8,14 +8,14 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="6"
+K_GENPATCHES_VER="7"
 
 inherit kernel-2
 detect_version
 detect_arch
 
 CACHYOS_RELEASE="-1"
-CACHYOS_COMMIT="8242bda544657099da69993f019ff3fb23cfe05f"
+CACHYOS_COMMIT="749983abd1d78492ef0b8bc7f23d92540077b62c"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${OKV}${CACHYOS_RELEASE}/cachyos-${OKV}${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
