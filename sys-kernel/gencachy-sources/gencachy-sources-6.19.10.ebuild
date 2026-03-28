@@ -8,16 +8,16 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="7"
+K_GENPATCHES_VER="9"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="-1"
-CACHYOS_COMMIT="ac70453c25200f0a30ad38b3caa63020869f0f8a"
+CACHYOS_RELEASE="${OKV}-1"
+CACHYOS_COMMIT="a7814065cceb0be29f645ac8ebfcc4b373e9f917"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
-CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${OKV}${CACHYOS_RELEASE}/cachyos-${OKV}${CACHYOS_RELEASE}.tar.gz"
+CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
 
 DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to provide improved performance and responsiveness for desktop workloads."
@@ -31,14 +31,13 @@ SRC_URI="
 	${CACHYOS_PATCH_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/nap-governor.patch -> nap-governor-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/poc-selector.patch -> poc-selector-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/reflex-governor.patch -> reflex-governor-${CACHYOS_VERSION}.patch
 "
 
 LICENSE="GPL"
 SLOT="stable"
 KEYWORDS="~amd64"
-IUSE="misc aufs +bore clang-dkms clang-polly nap-governor poc-selector prjc reflex-governor"
+IUSE="misc aufs +bore clang-dkms clang-polly nap-governor prjc reflex-governor"
 RESTRICT="mirror"
 REQUIRED_USE="
 	|| ( bore prjc )
@@ -46,7 +45,6 @@ REQUIRED_USE="
 	clang-dkms? ( misc )
 	clang-polly? ( misc )
 	nap-governor? ( misc )
-	poc-selector? ( misc )
 	reflex-governor? ( misc )
 "
 
@@ -57,11 +55,11 @@ BDEPEND=""
 src_unpack() {
 	cd "${WORKDIR}" || die
 
-	tar xf "${DISTDIR}/cachyos-${OKV}${CACHYOS_RELEASE}.tar.gz" || die
-	mv "cachyos-${OKV}${CACHYOS_RELEASE}" "linux-${OKV}${EXTRAVERSION}" || die
+	tar xf "${DISTDIR}/cachyos-${CACHYOS_RELEASE}.tar.gz" || die
+	mv "cachyos-${CACHYOS_RELEASE}" "linux-${OKV}${EXTRAVERSION}" || die
 
 	local genpatch_archives=( base extras )
-	for gpa in ${genpatch_archives[@]};	do
+	for gpa in "${genpatch_archives[@]}";	do
 		tar xf "${DISTDIR}/genpatches-${KV_MAJOR}.${KV_MINOR}-${K_GENPATCHES_VER}.${gpa}.tar.xz" || die
 	done
 
@@ -89,7 +87,6 @@ src_prepare() {
 
 	use clang-dkms      && eapply "${DISTDIR}/dkms-clang-${CACHYOS_VERSION}.patch"
 	use nap-governor    && eapply "${DISTDIR}/nap-governor-${CACHYOS_VERSION}.patch"
-	use poc-selector    && eapply "${DISTDIR}/poc-selector-${CACHYOS_VERSION}.patch"
 	use reflex-governor && eapply "${DISTDIR}/reflex-governor-${CACHYOS_VERSION}.patch"
 
 	eapply_user
