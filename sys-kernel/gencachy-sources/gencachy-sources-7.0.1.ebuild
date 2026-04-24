@@ -8,14 +8,14 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="11"
+K_GENPATCHES_VER="1"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-2"
-CACHYOS_COMMIT="a0a4cfc513bec1b917aabdea4f30cd8fa2d83e8e"
+CACHYOS_RELEASE="${OKV}-3"
+CACHYOS_COMMIT="579b7bd71f6d385cb5027cd48a541f8556cb5f88"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -24,12 +24,10 @@ DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to pro
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
 SRC_URI="
-	${CACHYOS_SRC_URI}
-	https://dev.gentoo.org/~alicef/dist/genpatches/genpatches-6.19-11.base.tar.xz
-	https://dev.gentoo.org/~alicef/dist/genpatches/genpatches-6.19-11.extras.tar.xz
-	${CACHYOS_PATCH_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
+	${CACHYOS_SRC_URI} ${GENPATCHES_URI}
+	${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260309.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
+	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260420.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
@@ -58,7 +56,7 @@ src_unpack() {
 
 	local genpatch_archives=( base extras )
 	for gpa in "${genpatch_archives[@]}";	do
-		tar xf "${DISTDIR}/genpatches-6.19-${K_GENPATCHES_VER}.${gpa}.tar.xz" || die
+		tar xf "${DISTDIR}/genpatches-${KV_MAJOR}.${KV_MINOR}-${K_GENPATCHES_VER}.${gpa}.tar.xz" || die
 	done
 
 	S="${WORKDIR}/linux-${OKV}${EXTRAVERSION}"
