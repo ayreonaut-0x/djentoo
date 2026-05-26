@@ -8,14 +8,14 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="10"
+K_GENPATCHES_VER="16"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="2c2eb7e421e954960dd336d7d45c24f949475958"
+CACHYOS_RELEASE="${OKV}-2"
+CACHYOS_COMMIT="668b466fb461409329425b50c4a9d8d2c022a739"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -24,12 +24,12 @@ DESCRIPTION="Linux kernel built upon CachyOS and Gentoo patchsets, aiming to pro
 HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
 SRC_URI="
-	${CACHYOS_SRC_URI} ${GENPATCHES_URI}
-	${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260511.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
+${CACHYOS_SRC_URI} ${GENPATCHES_URI}
+${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
+${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
+${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260518.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
+${CACHYOS_PATCH_URI}/misc/0001-clang-polly.patch -> 0001-clang-polly-${CACHYOS_VERSION}.patch
+${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
 
 LICENSE="GPL"
@@ -38,10 +38,10 @@ KEYWORDS="~amd64"
 IUSE="misc aufs +bore clang-dkms clang-polly prjc"
 RESTRICT="mirror"
 REQUIRED_USE="
-	|| ( bore prjc )
-	aufs? ( misc )
-	clang-dkms? ( misc )
-	clang-polly? ( misc )
+|| ( bore prjc )
+aufs? ( misc )
+clang-dkms? ( misc )
+clang-polly? ( misc )
 "
 
 DEPEND="virtual/linux-sources"
@@ -70,12 +70,13 @@ src_prepare() {
 	use aufs            && eapply "${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch"
 	use clang-polly     && eapply "${DISTDIR}/0001-clang-polly-${CACHYOS_VERSION}.patch"
 
+	# eapply "${WORKDIR}/1500_net-skbuff-prop-shared-frag-marker-through-pskb-copy-v5.patch"
 	eapply "${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 	eapply "${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 	eapply "${WORKDIR}/1730_parisc-Disable-prctl.patch"
 	eapply "${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
 	eapply "${WORKDIR}/2901_permit-menuconfig-sorting.patch"
-	# eapply "${WORKDIR}/2920_sign-file-patch-for-libressl.patch"
+	eapply "${WORKDIR}/2902_Replace-CONST-CAST-with-const-cast.patch"
 	eapply "${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
 	eapply "${WORKDIR}/2991_libbpf_add_WERROR_option.patch"
 	eapply "${WORKDIR}/3000_Support-printing-firmware-info.patch"
