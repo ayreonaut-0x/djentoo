@@ -8,14 +8,14 @@ K_NOSETEXTRAVERSION="1"
 K_SECURITY_UNSUPPORTED="1"
 K_EXP_GENPATCHES_NOUSE="1"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="7"
+K_GENPATCHES_VER="9"
 
 inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-2"
-CACHYOS_COMMIT="0fbc4adfec58c056d07adfc78d0e09bd32162853"
+CACHYOS_RELEASE="${OKV}-1"
+CACHYOS_COMMIT="3d5a42bde5558a2838d58766e710a7d458e309dc"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -88,8 +88,6 @@ src_prepare() {
 		"${WORKDIR}/1710_x86-tools-vdso2c.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
-		"${WORKDIR}/2010_can-bcm-defer-rx_op-deallocation-to-workqueue-to-fix.patch"
-		"${WORKDIR}/2700_drm-amdgpu-fix-check-in-amdgpu-hmm-invalidate-gfx.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
 		"${WORKDIR}/2902_Replace-CONST-CAST-with-const-cast.patch"
 		"${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
