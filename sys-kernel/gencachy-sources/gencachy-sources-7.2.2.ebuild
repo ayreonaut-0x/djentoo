@@ -4,18 +4,18 @@
 EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
-K_NOSETEXTRAVERSION="1"
-K_SECURITY_UNSUPPORTED="1"
-K_EXP_GENPATCHES_NOUSE="1"
+K_NOSETEXTRAVERSION=1
+K_GENPATCHES_VER="3"
 K_WANT_GENPATCHES="base extras"
-K_GENPATCHES_VER="1"
+K_NO_VERSION_CHECK=0
+K_SECURITY_UNSUPPORTED=1
 
 inherit kernel-2
 detect_version
 detect_arch
 
 CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="b3d684160f64763d46da0368d9a1e6f1280e8685"
+CACHYOS_COMMIT="a40b85abdcb9f4ba653e2e1ea89d3d1f0cf563ba"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -28,20 +28,19 @@ SRC_URI="
 	${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-muqss-cachy.patch -> 0001-muqss-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260713.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
+	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260824.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
 
 LICENSE="GPL"
 SLOT="stable"
 KEYWORDS="~amd64"
-IUSE="aufs +bore clang-dkms clang-polly misc muqss prjc"
+IUSE="aufs +bore clang-dkms misc muqss prjc"
 RESTRICT="mirror"
 REQUIRED_USE="
 	|| ( bore prjc muqss )
 	aufs? ( misc )
 	clang-dkms? ( misc )
-	clang-polly? ( misc )
 "
 
 DEPEND="virtual/linux-sources"
@@ -67,10 +66,10 @@ src_unpack() {
 src_prepare() {
 	local plist=()
 
-	use bore && plist+=("${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch")
-	use prjc && plist+=("${DISTDIR}/0001-muqss-cachy-${CACHYOS_VERSION}.patch")
-	use prjc && plist+=("${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch")
-	# use aufs && plist+=("${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch")
+	use bore  && plist+=("${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch")
+	use muqss && plist+=("${DISTDIR}/0001-muqss-cachy-${CACHYOS_VERSION}.patch")
+	use prjc  && plist+=("${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch")
+	use aufs  && plist+=("${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch")
 
 	plist+=(
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
