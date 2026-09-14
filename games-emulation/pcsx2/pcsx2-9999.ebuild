@@ -93,6 +93,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.5.317-flags.patch
 	"${FILESDIR}"/${PN}-2.6.3-climits.patch
 	"${FILESDIR}"/${PN}-2.6.3-cubeb-alsa.patch
+	"${FILESDIR}"/${PN}-fix-missing-cmath-include-9999.patch
 )
 
 CMAKE_QA_COMPAT_SKIP=1 #957976

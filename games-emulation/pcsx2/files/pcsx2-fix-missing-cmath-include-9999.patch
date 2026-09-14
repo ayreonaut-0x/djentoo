@@ -1,0 +1,12 @@
+diff --git a/pcsx2/PerformanceMetrics.h b/pcsx2/PerformanceMetrics.h
+index 288032306..f81b2cbf9 100644
+--- a/pcsx2/PerformanceMetrics.h
++++ b/pcsx2/PerformanceMetrics.h
+@@ -4,6 +4,7 @@
+ #pragma once
+ 
+ #include <array>
++#include <cmath>
+ #include "common/Threading.h"
+ 
+ namespace PerformanceMetrics
