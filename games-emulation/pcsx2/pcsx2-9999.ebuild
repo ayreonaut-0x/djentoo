@@ -126,7 +126,7 @@ src_prepare() {
 
 src_configure() {
 	# lto currently causes runtime issues (bug #980365)
-	# filter-lto
+	filter-lto
 
 	# note that upstream only supports clang and ignores gcc issues, e.g.
 	# https://github.com/PCSX2/pcsx2/issues/10624#issuecomment-1890326047
@@ -140,7 +140,7 @@ src_configure() {
 		-DBUILD_SHARED_LIBS=no
 		-DDISABLE_ADVANCE_SIMD=no
 		# -DLTO_PCSX2_CORE=yes
-		# -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=on
+		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=on
 		-DCMAKE_POSITION_INDEPENDENT_CODE=on
 		-DENABLE_TESTS=$(usex test)
 		-DPACKAGE_MODE=yes
