@@ -5,7 +5,7 @@ EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
 K_NOSETEXTRAVERSION=1
-K_GENPATCHES_VER="6"
+K_GENPATCHES_VER="8"
 K_WANT_GENPATCHES="base extras"
 K_NO_VERSION_CHECK=0
 K_SECURITY_UNSUPPORTED=1
@@ -15,7 +15,7 @@ detect_version
 detect_arch
 
 CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="9bf8104a95f8c0c60193fd65be3f11bc1fa05f57"
+CACHYOS_COMMIT="ad05f06c22e8e3b7993fc4726d23ad6c7c3b3fb5"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -25,7 +25,7 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
 SRC_URI="
 	${CACHYOS_SRC_URI} ${GENPATCHES_URI}
-	${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
+	${CACHYOS_PATCH_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-muqss-cachy.patch -> 0001-muqss-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260907.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
@@ -77,6 +77,7 @@ src_prepare() {
 		"${WORKDIR}/1710_x86-tools-vdso2c.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
+		"${WORKDIR}/2400_mt7921_fix-arr-indx-oob-in-mt7921-load-clc.patch"
 		"${WORKDIR}/2901_permit-menuconfig-sorting.patch"
 		"${WORKDIR}/2902_Replace-CONST-CAST-with-const-cast.patch"
 		"${WORKDIR}/2990_libbpf-v2-workaround-Wmaybe-uninitialized-false-pos.patch"
