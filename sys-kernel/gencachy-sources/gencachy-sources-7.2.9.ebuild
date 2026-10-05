@@ -5,7 +5,7 @@ EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
 K_NOSETEXTRAVERSION=1
-K_GENPATCHES_VER="8"
+K_GENPATCHES_VER="10"
 K_WANT_GENPATCHES="base extras"
 K_NO_VERSION_CHECK=0
 K_SECURITY_UNSUPPORTED=1
@@ -14,8 +14,8 @@ inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="ad05f06c22e8e3b7993fc4726d23ad6c7c3b3fb5"
+CACHYOS_RELEASE="${OKV}-2"
+CACHYOS_COMMIT="17bb0bb818d283d0dc6e0280a2e9d5b95e66808b"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -28,7 +28,7 @@ SRC_URI="
 	${CACHYOS_PATCH_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-muqss-cachy.patch -> 0001-muqss-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260907.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
+	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260914.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
 "
 
