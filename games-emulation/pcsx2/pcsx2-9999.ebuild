@@ -28,7 +28,7 @@ LICENSE="
 	ISC LGPL-2.1+ LGPL-3+ MIT OFL-1.1 ZLIB public-domain
 "
 SLOT="0"
-IUSE="alsa cpu_flags_x86_sse4_1 +clang jack pulseaudio sndio test wayland"
+IUSE="alsa cpu_flags_x86_sse4_1 +clang jack lto pulseaudio sndio test wayland"
 REQUIRED_USE="cpu_flags_x86_sse4_1" # dies at runtime if no support
 RESTRICT="!test? ( test )"
 
@@ -93,7 +93,6 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.5.317-flags.patch
 	"${FILESDIR}"/${PN}-2.6.3-climits.patch
 	"${FILESDIR}"/${PN}-2.6.3-cubeb-alsa.patch
-	"${FILESDIR}"/${PN}-fix-missing-cmath-include-9999.patch
 )
 
 CMAKE_QA_COMPAT_SKIP=1 #957976
@@ -126,7 +125,11 @@ src_prepare() {
 
 src_configure() {
 	# lto currently causes runtime issues (bug #980365)
-	filter-lto
+	if use lto; then
+		ewarn "lto is enabled. This is experimental and may lead to runtime issues (bug #980365)."
+	else
+		filter-lto
+	fi
 
 	# note that upstream only supports clang and ignores gcc issues, e.g.
 	# https://github.com/PCSX2/pcsx2/issues/10624#issuecomment-1890326047
