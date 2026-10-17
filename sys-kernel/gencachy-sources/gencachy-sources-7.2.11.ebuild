@@ -5,7 +5,7 @@ EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
 K_NOSETEXTRAVERSION=1
-K_GENPATCHES_VER="10"
+K_GENPATCHES_VER="12"
 K_WANT_GENPATCHES="base extras"
 K_NO_VERSION_CHECK=0
 K_SECURITY_UNSUPPORTED=1
@@ -14,8 +14,8 @@ inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-2"
-CACHYOS_COMMIT="17bb0bb818d283d0dc6e0280a2e9d5b95e66808b"
+CACHYOS_RELEASE="${OKV}-1"
+CACHYOS_COMMIT="333b9269015584d1b31f75af9e23d838d7b3d0fe"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -75,6 +75,7 @@ src_prepare() {
 		"${WORKDIR}/1510_fs-enable-link-security-restrictions-by-default.patch"
 		"${WORKDIR}/1700_sparc-address-warray-bound-warnings.patch"
 		"${WORKDIR}/1710_x86-tools-vdso2c.patch"
+		"${WORKDIR}/1715_x86-cpu-amd-avoid-printing-reset-reasons-on-Xen-domU.patch"
 		"${WORKDIR}/1730_parisc-Disable-prctl.patch"
 		"${WORKDIR}/2000_BT-Check-key-sizes-only-if-Secure-Simple-Pairing-enabled.patch"
 		"${WORKDIR}/2400_mt7921_fix-arr-indx-oob-in-mt7921-load-clc.patch"
