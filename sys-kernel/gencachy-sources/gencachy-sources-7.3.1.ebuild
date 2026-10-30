@@ -5,7 +5,7 @@ EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
 K_NOSETEXTRAVERSION=1
-K_GENPATCHES_VER="12"
+K_GENPATCHES_VER="2"
 K_WANT_GENPATCHES="base extras"
 K_NO_VERSION_CHECK=0
 K_SECURITY_UNSUPPORTED=1
@@ -15,7 +15,7 @@ detect_version
 detect_arch
 
 CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="333b9269015584d1b31f75af9e23d838d7b3d0fe"
+CACHYOS_COMMIT="ccab691ea1639593b884ace67600d7f6c04e6e1f"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
@@ -25,8 +25,7 @@ HOMEPAGE="https://github.com/CachyOS/linux-cachyos"
 
 SRC_URI="
 	${CACHYOS_SRC_URI} ${GENPATCHES_URI}
-	${CACHYOS_PATCH_URI}/sched-dev/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
-	${CACHYOS_PATCH_URI}/sched/0001-muqss-cachy.patch -> 0001-muqss-cachy-${CACHYOS_VERSION}.patch
+	${CACHYOS_PATCH_URI}/sched/0001-bore-cachy.patch -> 0001-bore-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/sched/0001-prjc-cachy.patch -> 0001-prjc-cachy-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/0001-aufs-${KV_MAJOR}.${KV_MINOR}-merge-v20260914.patch -> 0001-aufs-${CACHYOS_VERSION}.patch
 	${CACHYOS_PATCH_URI}/misc/dkms-clang.patch -> dkms-clang-${CACHYOS_VERSION}.patch
@@ -35,10 +34,10 @@ SRC_URI="
 LICENSE="GPL"
 SLOT="stable"
 KEYWORDS="~amd64"
-IUSE="aufs +bore clang-dkms misc muqss prjc"
+IUSE="aufs +bore clang-dkms misc prjc"
 RESTRICT="mirror"
 REQUIRED_USE="
-	|| ( bore prjc muqss )
+	|| ( bore prjc )
 	aufs? ( misc )
 	clang-dkms? ( misc )
 "
@@ -67,7 +66,6 @@ src_prepare() {
 	local plist=()
 
 	use bore  && plist+=("${DISTDIR}/0001-bore-cachy-${CACHYOS_VERSION}.patch")
-	use muqss && plist+=("${DISTDIR}/0001-muqss-cachy-${CACHYOS_VERSION}.patch")
 	use prjc  && plist+=("${DISTDIR}/0001-prjc-cachy-${CACHYOS_VERSION}.patch")
 	use aufs  && plist+=("${DISTDIR}/0001-aufs-${CACHYOS_VERSION}.patch")
 
