@@ -15,7 +15,7 @@ detect_version
 detect_arch
 
 CACHYOS_RELEASE="${OKV}-1"
-CACHYOS_COMMIT="ccab691ea1639593b884ace67600d7f6c04e6e1f"
+CACHYOS_COMMIT="f3770b16d069a1bce8dfa63841042137f8b43434"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
