@@ -5,7 +5,7 @@ EAPI=8
 ETYPE="sources"
 EXTRAVERSION="-gencachy"
 K_NOSETEXTRAVERSION=1
-K_GENPATCHES_VER="1"
+K_GENPATCHES_VER="4"
 K_WANT_GENPATCHES="base extras"
 K_NO_VERSION_CHECK=0
 K_SECURITY_UNSUPPORTED=1
@@ -14,8 +14,8 @@ inherit kernel-2
 detect_version
 detect_arch
 
-CACHYOS_RELEASE="${OKV}-4"
-CACHYOS_COMMIT="89bb22dec944d4d5b31332f2affbc740665cf0d9"
+CACHYOS_RELEASE="${OKV}-1"
+CACHYOS_COMMIT="706b5652a82404eb2a75c79da3b726eec07a5642"
 CACHYOS_VERSION="${KV_MAJOR}.${KV_MINOR}-${CACHYOS_COMMIT}"
 CACHYOS_SRC_URI="https://github.com/CachyOS/linux/releases/download/cachyos-${CACHYOS_RELEASE}/cachyos-${CACHYOS_RELEASE}.tar.gz"
 CACHYOS_PATCH_URI="https://raw.githubusercontent.com/cachyos/kernel-patches/${CACHYOS_COMMIT}/${KV_MAJOR}.${KV_MINOR}"
